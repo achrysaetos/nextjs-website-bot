@@ -17,7 +17,11 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-player": "^2.9.0",
-    "stripe": "^8.191.0"
+    "stripe": "^8.191.0",
+    "@microsoft/fetch-event-source": "^2.0.1",
+    "@pinecone-database/pinecone": "0.0.8",
+    "langchain": "0.0.23",
+    "react-markdown": "^8.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
