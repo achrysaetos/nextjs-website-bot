@@ -8,16 +8,24 @@
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@stripe/stripe-js": "^1.21.1",
-    "@supabase/supabase-js": "^1.28.2",
+    "@supabase/auth-helpers-nextjs": "^0.7.2",
+    "@supabase/supabase-js": "^2.10.0",
     "axios": "^0.24.0",
+    "cheerio": "1.0.0-rc.12",
+    "clsx": "^1.2.1",
     "cookie": "^0.4.1",
+    "dotenv": "^16.0.3",
+    "langchain": "^0.0.26",
     "micro": "^9.3.4",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-markdown": "^8.0.5",
     "react-player": "^2.9.0",
-    "stripe": "^8.191.0"
+    "stripe": "^8.191.0",
+    "tailwind-merge": "^1.10.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

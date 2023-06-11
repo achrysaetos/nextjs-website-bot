@@ -7,13 +7,13 @@ import axios from "axios";
 const Context = createContext();
 
 const Provider = ({ children }) => {
-  const [user, setUser] = useState(supabase.auth.user());
+  const [user, setUser] = useState(supabase.auth.getUser());
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const getUserProfile = async () => {
-      const sessionUser = supabase.auth.user(); // Sets session user on page load and refresh
+      const sessionUser = supabase.auth.getUser(); // Sets session user on page load and refresh
 
       // Merge data from profile table with session user so we get user data across entire app
       if (sessionUser) {
@@ -44,7 +44,7 @@ const Provider = ({ children }) => {
   useEffect(() => {
     axios.post("/api/set-supabase-cookie", {
       event: user ? "SIGNED_IN" : "SIGNED_OUT",
-      session: supabase.auth.session(),
+      session: supabase.auth.getSession(),
     });
   }, [user]);
 
@@ -52,20 +52,20 @@ const Provider = ({ children }) => {
   useEffect(() => {
     if (user) {
       const subscription = supabase
-        .from(`profile:id=eq.${user.id}`)
+        .channel(`profile:id=eq.${user.id}`)
         .on("UPDATE", (payload) => {
           setUser({ ...user, ...payload.new });
         })
         .subscribe();
 
       return () => {
-        supabase.removeSubscription(subscription);
+        supabase.removeChannel(subscription);
       };
     }
   }, [user]);
 
   const login = async () => {
-    await supabase.auth.signIn({
+    await supabase.auth.signInWithOAuth({
       provider: "github",
     });
   };
