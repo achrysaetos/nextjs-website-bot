@@ -1,12 +1,19 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: ['class', '[data-theme="dark"]'],
+  content: [
+    'app/**/*.{ts,tsx}',
+    'components/**/*.{ts,tsx}',
+    'pages/**/*.{ts,tsx}'
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans]
+      }
+    }
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+  plugins: []
+};
