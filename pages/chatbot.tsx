@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
-import ChatLayout from '@/components/chat/layout';
-import styles from '@/styles/Home.module.css';
+import ChatLayout from '@/components/chat/Layout';
+import styles from '@/styles/chatbot.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/chat/LoadingDots';
 
-export default function Home() {
+export default function Chatbot() {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [messageState, setMessageState] = useState<{
