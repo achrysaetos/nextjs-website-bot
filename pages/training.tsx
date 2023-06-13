@@ -42,8 +42,8 @@ export default function Training({ user }: { user: User }) {
   const [text, setText] = useState<string>('');
   const [links, setLinks] = useState<string>('');
 
-  // api call to train the bot
-  const trainBot = async (urls: string[]) => {
+  // api calls
+  const scrapeEmbed = async (urls: string[]) => {
     setLoading(true);
     try {
       const path = '/api/scrape-embed';
@@ -65,16 +65,58 @@ export default function Training({ user }: { user: User }) {
       return alert((error as Error)?.message);
     }
   };
+  
+  const readEmbed = async (text: string) => {
+    setLoading(true);
+    try {
+      const path = '/api/read-embed';
+      const res: Response = await fetch(path, {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        credentials: 'same-origin',
+        body: JSON.stringify(text)
+      });
+      if (!res.ok) {
+        console.log('Error in postData', { path, text, res });
+        throw Error(res.statusText);
+      }
+      console.log("Scraped and embedded the following text: ", text);
+      setLoading(false);
+      return res.json();
+    } catch (error) {
+      setLoading(false);
+      return alert((error as Error)?.message);
+    }
+  };
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    if (!links) {
-      alert('Please add some links');
-      return;
-    }
     try {
       // replace all whitespace except newlines, split, and train
-      trainBot(links.replace(/[^\S\n]+/g, '').split('\n'));
+      switch (tab) {
+        case 'text':
+          if (!text) {
+            alert('Please add some text');
+            return;
+          }
+          readEmbed(text);
+          break;
+        case 'links':
+          if (!links) {
+            alert('Please add some links');
+            return;
+          }
+          scrapeEmbed(links.replace(/[^\S\n]+/g, '').split('\n'));
+          break;
+        case 'files':
+          // if (!files) {
+          //   alert('Please add some files');
+          //   return;
+          // }
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       console.log('error', error);
     }
@@ -104,11 +146,17 @@ export default function Training({ user }: { user: User }) {
                   </label>
                   <div className="mt-2">
                     <textarea
-                      id="about"
-                      name="about"
+                      disabled={loading}
+                      id="text"
+                      name="text"
+                      autoFocus={true}
                       rows={10}
+                      placeholder={
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                      }
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
                     />
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-600">

@@ -2,7 +2,6 @@ import type { CheerioAPI, load as LoadT } from 'cheerio';
 import { Document } from 'langchain/document';
 import { BaseDocumentLoader } from 'langchain/document_loaders';
 import type { DocumentLoader } from 'langchain/document_loaders';
-import { CheerioWebBaseLoader } from 'langchain/document_loaders';
 
 export class CustomWebLoader
   extends BaseDocumentLoader
@@ -25,15 +24,15 @@ export class CustomWebLoader
 
   async load(): Promise<Document[]> {
     const $ = await this.scrape();
-    const title = $('h1.entry-title').text();
-    const date = $('meta[property="article:published_time"]').attr('content');
+    const title = undefined;
+    const date = undefined;
 
-    const content = $('.entry-content')
-      .clone()
-      .find('div.elementor, style')
-      .remove()
-      .end()
-      .text();
+    const content = $('p, h1, h2, h3, h4, h5, h6').text(); // only paragraphs and headings
+      // .clone()
+      // .find('div.elementor, style')
+      // .remove()
+      // .end()
+      // .text();
 
     const cleanedContent = content.replace(/\s+/g, ' ').trim();
 
