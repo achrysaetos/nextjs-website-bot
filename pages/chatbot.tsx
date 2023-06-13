@@ -6,8 +6,35 @@ import { fetchEventSource } from '@microsoft/fetch-event-source';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/chat/LoadingDots';
+import { GetServerSidePropsContext } from 'next';
+import { createServerSupabaseClient, User} from '@supabase/auth-helpers-nextjs';
+import { useUser } from '@/utils/useUser';
 
-export default function Chatbot() {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createServerSupabaseClient(ctx);
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false
+      }
+    };
+
+  return {
+    props: {
+      initialSession: session,
+      user: session.user
+    }
+  };
+};
+
+export default function Chatbot({ user }: { user: User }) {
+  const { isLoading, subscription, userDetails } = useUser();
+
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [messageState, setMessageState] = useState<{

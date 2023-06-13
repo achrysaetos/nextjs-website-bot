@@ -15,7 +15,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user) {
-      router.replace('/dashboard');
+      router.replace('/chatbot');
     }
   }, [user]);
 

@@ -33,9 +33,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-export default function Dashboard({ user }: { user: User }) {
+export default function Settings({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const { isLoading, subscription, userDetails } = useUser();
   
-  return <h1>Dashboard</h1>;
+  return <h1>Settings</h1>;
 }
