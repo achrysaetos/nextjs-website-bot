@@ -1,12 +1,11 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { Document } from 'langchain/document';
-import * as fs from 'fs/promises';
 import { CustomWebLoader } from '@/utils/custom_web_loader';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { supabaseClient } from '@/utils/supabase-client';
-import { urls } from '@/config/notionurls';
 
 async function extractDataFromUrl(url: string): Promise<Document[]> {
   try {
@@ -26,10 +25,6 @@ async function extractDataFromUrls(urls: string[]): Promise<Document[]> {
     const docs = await extractDataFromUrl(url);
     documents.push(...docs);
   }
-  console.log('data extracted from urls');
-  const json = JSON.stringify(documents);
-  await fs.writeFile('franknotion.json', json);
-  console.log('json file containing data saved on disk');
   return documents;
 }
 
@@ -40,7 +35,7 @@ async function embedDocuments(
 ) {
   console.log('creating embeddings...');
   await SupabaseVectorStore.fromDocuments(client, docs, embeddings);
-  console.log('embeddings successfully stored in supabase');
+  console.log('storing in supabase... done!');
 }
 
 async function splitDocsIntoChunks(docs: Document[]): Promise<Document[]> {
@@ -51,15 +46,27 @@ async function splitDocsIntoChunks(docs: Document[]): Promise<Document[]> {
   return await textSplitter.splitDocuments(docs);
 }
 
-(async function run(urls: string[]) {
-  try {
-    //load data from each url
-    const rawDocs = await extractDataFromUrls(urls);
-    //split docs into chunks for openai context window
-    const docs = await splitDocsIntoChunks(rawDocs);
-    //embed docs into supabase
-    await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
-  } catch (error) {
-    console.log('error occured:', error);
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  if (req.method === 'POST') {
+    try {
+      //load data from each url
+      const rawDocs = await extractDataFromUrls(req.body);
+      //split docs into chunks for openai context window
+      const docs = await splitDocsIntoChunks(rawDocs);
+      //embed docs into supabase
+      await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      return res.status(200).json({ message: 'success' });
+    } catch (err: any) {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: { statusCode: 500, message: err.message } });
+    }
+  } else {
+    res.setHeader('Allow', 'POST');
+    res.status(405).end('Method Not Allowed');
   }
-})(urls);
+}
