@@ -1,17 +1,13 @@
-import { useState, ReactNode } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import ChatLayout from '@/components/chat/Layout';
 import { GetServerSidePropsContext } from 'next';
 import {
   createServerSupabaseClient,
   User
 } from '@supabase/auth-helpers-nextjs';
-
-import LoadingDots from '@/components/ui/LoadingDots';
-import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
-import { postData } from '@/utils/helpers';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import { PhotoIcon } from '@heroicons/react/24/solid';
+import axios from 'axios';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -41,12 +37,13 @@ export default function Training({ user }: { user: User }) {
   const [tab, setTab] = useState<string>('text'); // text, links, files
   const [text, setText] = useState<string>('');
   const [links, setLinks] = useState<string>('');
+  const [files, setFiles] = useState<any>('');
 
   // api calls
-  const scrapeEmbed = async (urls: string[]) => {
+  const linksEmbed = async (urls: string[]) => {
     setLoading(true);
     try {
-      const path = '/api/scrape-embed';
+      const path = '/api/links-embed';
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -66,10 +63,10 @@ export default function Training({ user }: { user: User }) {
     }
   };
   
-  const readEmbed = async (text: string) => {
+  const textEmbed = async (text: string) => {
     setLoading(true);
     try {
-      const path = '/api/read-embed';
+      const path = '/api/text-embed';
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -80,7 +77,7 @@ export default function Training({ user }: { user: User }) {
         console.log('Error in postData', { path, text, res });
         throw Error(res.statusText);
       }
-      console.log("Scraped and embedded the following text: ", text);
+      console.log("Read and embedded the following text: ", text);
       setLoading(false);
       return res.json();
     } catch (error) {
@@ -99,20 +96,38 @@ export default function Training({ user }: { user: User }) {
             alert('Please add some text');
             return;
           }
-          readEmbed(text);
+          textEmbed(text);
           break;
         case 'links':
           if (!links) {
             alert('Please add some links');
             return;
           }
-          scrapeEmbed(links.replace(/[^\S\n]+/g, '').split('\n'));
+          linksEmbed(links.replace(/[^\S\n]+/g, '').split('\n'));
           break;
         case 'files':
-          // if (!files) {
-          //   alert('Please add some files');
-          //   return;
-          // }
+          if (!files) {
+            alert('Please add some files');
+            return;
+          }
+          const data = new FormData();
+          data.append("file", files[0]);
+          await axios
+            .post("/api/upload-files", data)
+            .then(res => {
+              console.log("Uploaded the following files.");
+          })
+            .catch(err => {
+              console.log(err);
+          });
+          await axios
+            .post("/api/files-embed", data)
+            .then(res => {
+              console.log("Embedded the following files.");
+          })
+            .catch(err => {
+              console.log(err);
+          });
           break;
         default:
           break;
@@ -216,6 +231,7 @@ export default function Training({ user }: { user: User }) {
                             name="file-upload"
                             type="file"
                             className="sr-only"
+                            onChange={(e) => setFiles(e.target.files)}
                           />
                         </label>
                         <p className="pl-1">or drag and drop</p>

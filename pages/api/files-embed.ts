@@ -1,32 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Document } from 'langchain/document';
-import { CustomWebLoader } from '@/utils/custom_web_loader';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
+import { Embeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { supabaseClient } from '@/utils/supabase-client';
-
-async function extractDataFromUrl(url: string): Promise<Document[]> {
-  try {
-    const loader = new CustomWebLoader(url);
-    const docs = await loader.load();
-    return docs;
-  } catch (error) {
-    console.error(`Error while extracting data from ${url}: ${error}`);
-    return [];
-  }
-}
-
-async function extractDataFromUrls(urls: string[]): Promise<Document[]> {
-  console.log('extracting data from urls...');
-  const documents: Document[] = [];
-  for (const url of urls) {
-    const docs = await extractDataFromUrl(url);
-    documents.push(...docs);
-  }
-  return documents;
-}
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
+import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 
 async function embedDocuments(
   client: SupabaseClient,
@@ -53,11 +32,16 @@ export default async function handler(
   if (req.method === 'POST') {
     try {
       //load data from each url
-      const rawDocs = await extractDataFromUrls(req.body);
+      const filePath = 'public/user_files';
+      const directoryLoader = new DirectoryLoader(filePath, {
+        '.pdf': (path: any) => new PDFLoader(path),
+      });
+      const rawDocs = await directoryLoader.load();
+      console.log(rawDocs);
       //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
+      // const docs = await splitDocsIntoChunks(rawDocs);
       //embed docs into supabase
-      await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      // await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);

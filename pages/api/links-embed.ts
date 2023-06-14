@@ -1,22 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Document } from 'langchain/document';
+import { CustomWebLoader } from '@/utils/custom_web_loader';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
+import { Embeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { supabaseClient } from '@/utils/supabase-client';
 
-async function extractDataFromText(content: string): Promise<Document[]> {
+async function extractDataFromUrl(url: string): Promise<Document[]> {
   try {
-    console.log('extracting data from text...');
-    const cleanedContent = content.replace(/\s+/g, ' ').trim();
-    const contentLength = cleanedContent?.match(/\b\w+\b/g)?.length ?? 0;
-    const metadata = { source: undefined, title: undefined, date: undefined, contentLength };
-    return [new Document({ pageContent: cleanedContent, metadata })];
+    const loader = new CustomWebLoader(url);
+    const docs = await loader.load();
+    return docs;
   } catch (error) {
-    console.error(`Error while extracting data from text`);
+    console.error(`Error while extracting data from ${url}: ${error}`);
     return [];
   }
+}
+
+async function extractDataFromUrls(urls: string[]): Promise<Document[]> {
+  console.log('extracting data from urls...');
+  const documents: Document[] = [];
+  for (const url of urls) {
+    const docs = await extractDataFromUrl(url);
+    documents.push(...docs);
+  }
+  return documents;
 }
 
 async function embedDocuments(
@@ -44,11 +52,12 @@ export default async function handler(
   if (req.method === 'POST') {
     try {
       //load data from each url
-      const rawDocs = await extractDataFromText(req.body);
+      const rawDocs = await extractDataFromUrls(req.body);
+      console.log(rawDocs);
       //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
+      // const docs = await splitDocsIntoChunks(rawDocs);
       //embed docs into supabase
-      await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      // await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);
