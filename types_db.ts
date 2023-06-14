@@ -177,6 +177,9 @@ export interface Database {
           avatar_url: string | null;
           billing_address: Json | null;
           full_name: string | null;
+          user_prompt: string | null;
+          user_api: string | null;
+          user_model: string | null;
           id: string;
           payment_method: Json | null;
         };
@@ -184,6 +187,9 @@ export interface Database {
           avatar_url?: string | null;
           billing_address?: Json | null;
           full_name?: string | null;
+          user_prompt?: string | null;
+          user_api?: string | null;
+          user_model?: string | null;
           id: string;
           payment_method?: Json | null;
         };
@@ -191,6 +197,9 @@ export interface Database {
           avatar_url?: string | null;
           billing_address?: Json | null;
           full_name?: string | null;
+          user_prompt?: string | null;
+          user_api?: string | null;
+          user_model?: string | null;
           id?: string;
           payment_method?: Json | null;
         };

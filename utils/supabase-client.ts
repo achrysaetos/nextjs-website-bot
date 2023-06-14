@@ -8,11 +8,11 @@ import type { Database } from 'types_db';
 
 import { createClient } from '@supabase/supabase-js';
 
-// Create a single supabase client for interacting with your database
-export const supabaseClient = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-);
+// // Create a single supabase client for interacting with your database
+// export const supabaseClient = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+//   process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+// );
 
 export const supabase = createBrowserSupabaseClient<Database>();
 
@@ -39,6 +39,33 @@ export const updateUserName = async (user: User, name: string) => {
     .from('users')
     .update({
       full_name: name
+    })
+    .eq('id', user.id);
+};
+
+export const updateUserPrompt = async (user: User, prompt: string) => {
+  await supabase
+    .from('users')
+    .update({
+      user_prompt: prompt
+    })
+    .eq('id', user.id);
+};
+
+export const updateUserApi = async (user: User, api: string) => {
+  await supabase
+    .from('users')
+    .update({
+      user_api: api
+    })
+    .eq('id', user.id);
+};
+
+export const updateUserModel = async (user: User, model: string) => {
+  await supabase
+    .from('users')
+    .update({
+      user_model: model
     })
     .eq('id', user.id);
 };
