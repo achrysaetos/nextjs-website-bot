@@ -37,6 +37,7 @@ export default function Training({ user }: { user: User }) {
   const [text, setText] = useState<string>('');
   const [links, setLinks] = useState<string>('');
   const [files, setFiles] = useState<any>('');
+  const [trainNew, setTrainNew] = useState<boolean>(true);
 
   // api calls
   const linksEmbed = async (urls: string[]) => {
@@ -136,6 +137,9 @@ export default function Training({ user }: { user: User }) {
 
   return (
     <ChatLayout>
+      <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
+        Train Your Bot
+      </h1>
       <div className="tabs">
         <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
           Upload text
@@ -153,9 +157,22 @@ export default function Training({ user }: { user: User }) {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               {tab === 'text' && 
                 <div className="col-span-full">
-                  <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                    Add text
-                  </label>
+                  <div className="flex justify-between">
+                    <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                      Add text
+                    </label>
+                    <div className="form-control">
+                      <label className="label cursor-pointer">
+                        <span className="label-text mr-4">Train new bot</span> 
+                        <input 
+                          type="checkbox" 
+                          checked={trainNew} 
+                          className="checkbox checkbox-sm checkbox-success" 
+                          onChange={() => setTrainNew(!trainNew)}
+                        />
+                      </label>
+                    </div>
+                  </div>
                   <div className="mt-2">
                     <textarea
                       disabled={loading}
@@ -164,7 +181,7 @@ export default function Training({ user }: { user: User }) {
                       autoFocus={true}
                       rows={10}
                       placeholder={
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
                       }
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={text}
@@ -251,7 +268,7 @@ export default function Training({ user }: { user: User }) {
             </button>
           ) : (
             <button type="submit" disabled={loading} className="btn btn-outline btn-primary btn-wide">
-              Train Existing
+              Train
             </button>
           )}
         </div>

@@ -156,6 +156,9 @@ export default function Chatbot({ user }: { user: User }) {
   return (
     <>
       <ChatLayout>
+        <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
+          Chatterup Support
+        </h1>
         <div className="mx-auto flex flex-col gap-4">
           <main className={styles.main}>
             <div className={styles.cloud}>
