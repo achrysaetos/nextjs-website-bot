@@ -55,10 +55,10 @@ export default async function handler(
       //load data from each url
       const rawDocs = await extractDataFromUrls(req.body);
       console.log(rawDocs);
-      //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
-      //embed docs into supabase
-      await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      // //split docs into chunks for openai context window
+      // const docs = await splitDocsIntoChunks(rawDocs);
+      // //embed docs into supabase
+      // await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);

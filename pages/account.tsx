@@ -94,6 +94,26 @@ export default function Account({ user }: { user: User }) {
       </div>
       <div className="p-4">
         <Card
+          title="Your Profile"
+          description="This is the email account you're currently using."
+          footer={
+            <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
+              <p className="pb-4 sm:pb-0">
+                Check your usage statistics on OpenAI.
+              </p>
+              <form action="https://platform.openai.com/account/usage" target="_blank" rel="noopener noreferrer">
+                <Button variant="slim" type="submit">
+                  Open usage statistics
+                </Button>
+              </form>
+            </div>
+          }
+        >
+          <p className="text-xl mt-8 mb-4 font-semibold">
+            {user ? user.email : undefined}
+          </p>
+        </Card>
+        <Card
           title="Your Plan"
           description={
             subscription
@@ -127,33 +147,6 @@ export default function Account({ user }: { user: User }) {
               <Link href="/">Choose your plan</Link>
             )}
           </div>
-        </Card>
-        <Card
-          title="Your Name"
-          description="Please enter your full name, or a display name you are comfortable with."
-          footer={<p>Please use 64 characters at maximum.</p>}
-        >
-          <div className="text-xl mt-8 mb-4 font-semibold">
-            {userDetails ? (
-              `${
-                userDetails.full_name ??
-                `${userDetails.first_name} ${userDetails.last_name}`
-              }`
-            ) : (
-              <div className="h-8 mb-6">
-                <LoadingDots />
-              </div>
-            )}
-          </div>
-        </Card>
-        <Card
-          title="Your Email"
-          description="Please enter the email address you want to use to login."
-          footer={<p>We will email you to verify the change.</p>}
-        >
-          <p className="text-xl mt-8 mb-4 font-semibold">
-            {user ? user.email : undefined}
-          </p>
         </Card>
       </div>
     </section>
