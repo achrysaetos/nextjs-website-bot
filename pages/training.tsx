@@ -6,7 +6,7 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
-import { PhotoIcon } from '@heroicons/react/24/solid';
+import { PickerOverlay } from 'filestack-react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -85,6 +85,21 @@ export default function Training({ user }: { user: User }) {
     }
   };
 
+  const filesEmbed = async (files: any) => {
+    const pdfjs = await import('pdfjs-dist/build/pdf');
+    const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
+    let fullText = '';
+    for (const file of files) {
+      let doc = await pdfjs.getDocument(file.url).promise;
+      let pageTexts = Array.from({length: doc.numPages}, async (v,i) => {
+          return (await (await doc.getPage(i+1)).getTextContent()).items.map((token:any) => token.str).join(' ');
+      });
+      const text = (await Promise.all(pageTexts)).join('');
+      fullText += text + '\n';
+    }
+    textEmbed(fullText)
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     try {
@@ -109,6 +124,7 @@ export default function Training({ user }: { user: User }) {
             alert('Please add some files');
             return;
           }
+          filesEmbed(files)
           break;
         default:
           break;
@@ -188,41 +204,34 @@ export default function Training({ user }: { user: User }) {
               }
 
               {tab === 'files' && 
-                <div className="col-span-full">
-                  <label
-                    htmlFor="cover-photo"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Add files
-                  </label>
-                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                    <div className="text-center">
-                      <PhotoIcon
-                        className="mx-auto h-12 w-12 text-gray-300"
-                        aria-hidden="true"
-                      />
-                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <span>Upload a file</span>
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                            onChange={(e) => setFiles(e.target.files)}
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
+                <>
+                  {!files ?
+                    <PickerOverlay
+                      apikey={'Al9uEt8XQ067ONx51odaNz'}
+                      pickerOptions={{maxFiles: 10, accept: 'application/pdf'}}
+                      onSuccess={(res:any) => setFiles(res.filesUploaded)}
+                      onUploadDone={(res:any) => setFiles(res.filesUploaded)}
+                    />
+                  :
+                    <div className="col-span-full">
+                      <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                        Add files
+                      </label>
+                      <div className="mt-2">
+                        {files.map((file:any) => (
+                          <p key={file.url} className='text-sm text-base/loose text-green-500'>
+                            <a href={file.url} target="_blank" rel="noopener noreferrer">
+                              {file.filename} ({(file.size/1000000).toFixed(1)}mb)
+                            </a>
+                          </p>
+                        ))}
                       </div>
-                      <p className="text-xs leading-5 text-gray-600">
-                        PNG, JPG, GIF up to 10MB
+                      <p className="mt-3 text-sm leading-6 text-gray-600">
+                        Upload any number of pdf files, up to 20mb each.
                       </p>
                     </div>
-                  </div>
-                </div>
+                  }
+                </>
               }
             </div>
           </div>
