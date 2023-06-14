@@ -35,5 +35,3 @@ yarn-error.log*
 
 # editors
 .vscode
-
-public/user_files

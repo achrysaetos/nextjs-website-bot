@@ -7,7 +7,6 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -110,24 +109,6 @@ export default function Training({ user }: { user: User }) {
             alert('Please add some files');
             return;
           }
-          const data = new FormData();
-          data.append("file", files[0]);
-          await axios
-            .post("/api/upload-files", data)
-            .then(res => {
-              console.log("Uploaded the following files.");
-          })
-            .catch(err => {
-              console.log(err);
-          });
-          await axios
-            .post("/api/files-embed", data)
-            .then(res => {
-              console.log("Embedded the following files.");
-          })
-            .catch(err => {
-              console.log(err);
-          });
           break;
         default:
           break;

@@ -2,9 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Document } from 'langchain/document';
 import { CustomWebLoader } from '@/utils/custom_web_loader';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { Embeddings } from 'langchain/embeddings';
+import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { supabaseClient } from '@/utils/supabase-client';
 
 async function extractDataFromUrl(url: string): Promise<Document[]> {
   try {
@@ -55,9 +56,9 @@ export default async function handler(
       const rawDocs = await extractDataFromUrls(req.body);
       console.log(rawDocs);
       //split docs into chunks for openai context window
-      // const docs = await splitDocsIntoChunks(rawDocs);
+      const docs = await splitDocsIntoChunks(rawDocs);
       //embed docs into supabase
-      // await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);
