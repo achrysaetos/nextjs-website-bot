@@ -33,12 +33,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 export default function Settings({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const { isLoading, subscription, userDetails } = useUser();
-  const [model, setModel] = useState<string | undefined>(userDetails?.user_model);
-  const [prompt, setPrompt] = useState<string | undefined>(userDetails?.user_prompt);
+  const [model, setModel] = useState<string>('');
+  const [prompt, setPrompt] = useState<string>('');
 
   useEffect(() => {
-    setPrompt(userDetails?.user_prompt);
-    setModel(userDetails?.user_model);
+    setPrompt(userDetails?.user_prompt || '');
+    setModel(userDetails?.user_model || '');
   }, [userDetails]);
 
   async function handleSubmit(e: any) {

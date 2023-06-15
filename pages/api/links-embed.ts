@@ -5,7 +5,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { supabaseClient } from '@/utils/supabase-client';
+import { supabase } from '@/utils/supabase-client';
 
 async function extractDataFromUrl(url: string): Promise<Document[]> {
   try {
@@ -58,7 +58,7 @@ export default async function handler(
       // //split docs into chunks for openai context window
       // const docs = await splitDocsIntoChunks(rawDocs);
       // //embed docs into supabase
-      // await embedDocuments(supabaseClient, docs, new OpenAIEmbeddings());
+      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: ''}));
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);

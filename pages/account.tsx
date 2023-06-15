@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
 import {
@@ -10,6 +10,7 @@ import LoadingDots from '@/components/ui/LoadingDots';
 import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
+import { updateUserApi } from '@/utils/supabase-client';
 
 interface Props {
   title: string;
@@ -58,6 +59,20 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 export default function Account({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const { isLoading, subscription, userDetails } = useUser();
+  const [apikey, setApiKey] = useState<string>('');
+
+  useEffect(() => {
+    setApiKey(userDetails?.user_api || '');
+  }, [userDetails]);
+
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    try {
+      updateUserApi(user, apikey || '');
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
 
   const redirectToCustomerPortal = async () => {
     setLoading(true);
@@ -94,8 +109,8 @@ export default function Account({ user }: { user: User }) {
       </div>
       <div className="p-4">
         <Card
-          title="Your Profile"
-          description="This is the email account you're currently using."
+          title="Your API Key"
+          description="Enter your API key to unlock infinite messages!"
           footer={
             <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
               <p className="pb-4 sm:pb-0">
@@ -109,10 +124,24 @@ export default function Account({ user }: { user: User }) {
             </div>
           }
         >
-          <p className="text-xl mt-8 mb-4 font-semibold">
-            {user ? user.email : undefined}
-          </p>
+          <form onSubmit={handleSubmit}>
+            <div className="w-2/3">
+              <input
+                className="mt-8 mb-4 w-3/4 bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                placeholder="Enter your API key"
+                value={apikey}
+                onChange={(e) => setApiKey(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="flex-none w-1/4 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </Card>
+        
         <Card
           title="Your Plan"
           description={

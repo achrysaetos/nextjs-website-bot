@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
-import { openai } from '@/utils/openai-client';
-import { supabaseClient } from '@/utils/supabase-client';
+import { supabase } from '@/utils/supabase-client';
 
 import { OpenAI } from 'langchain/llms';
 import { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';
@@ -35,7 +34,10 @@ export const makeChain = (
   onTokenStream?: (token: string) => void,
 ) => {
   const questionGenerator = new LLMChain({
-    llm: new OpenAI({ temperature: 0 }),
+    llm: new OpenAI({ 
+      temperature: 0, 
+      openAIApiKey: ''
+    }),
     prompt: CONDENSE_PROMPT,
   });
   const docChain = loadQAChain(
@@ -46,6 +48,7 @@ export const makeChain = (
       callbackManager: {
         handleNewToken: onTokenStream,
       },
+      openAIApiKey: ''
     }),
     { prompt: QA_PROMPT },
   );
@@ -71,8 +74,8 @@ export default async function handler(
 
   /* create vectorstore*/
   const vectorStore = await SupabaseVectorStore.fromExistingIndex(
-    supabaseClient,
-    new OpenAIEmbeddings(),
+    supabase,
+    new OpenAIEmbeddings({openAIApiKey: ''}),
   );
 
   res.writeHead(200, {
@@ -87,7 +90,6 @@ export default async function handler(
 
   sendData(JSON.stringify({ data: '' }));
 
-  const model = openai;
   // create the chain
   const chain = makeChain(vectorStore, (token: string) => {
     sendData(JSON.stringify({ data: token }));
