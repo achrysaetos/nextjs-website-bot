@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
+import { Box, Divider, AbsoluteCenter, Center } from '@chakra-ui/react';
 
 interface Props {
   title: string;
@@ -96,7 +97,7 @@ export default function Account({ user }: { user: User }) {
     }).format((subscription?.prices?.unit_amount || 0) / 100);
 
   return (
-    <section className="bg-white mb-64">
+    <section className="bg-white mb-8">
     <div className="mx-auto flex items-center justify-start flex-col space-y-4">
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
@@ -110,7 +111,7 @@ export default function Account({ user }: { user: User }) {
         </span>
       </div>
 
-      <div className="divider my-2 py-2"></div>
+      <Divider marginY='2' />
 
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <ul className="mt-4 space-y-1 w-1/4">
@@ -141,7 +142,9 @@ export default function Account({ user }: { user: User }) {
           </li>
         </ul>
 
-        <div className="divider divider-horizontal"></div>
+        <Center height={48} marginY={5}>
+          <Divider orientation='vertical' />
+        </Center>
 
         <div className="mt-4 w-3/4">
           <Card
@@ -215,6 +218,13 @@ export default function Account({ user }: { user: User }) {
           </Card>
         </div>
       </div>
+    
+    <Box position='relative' marginTop='4'>
+      <Divider />
+      <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+        Powered by ChatGPT. Copyright © 2022 Chatterup.
+      </AbsoluteCenter>
+    </Box>
     </div>
     </div>
     </section>

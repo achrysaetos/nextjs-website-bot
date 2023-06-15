@@ -8,6 +8,7 @@ import LoadingDots from '@/components/chat/LoadingDots';
 import { GetServerSidePropsContext } from 'next';
 import { createServerSupabaseClient, User} from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
+import { Box, Divider, AbsoluteCenter } from '@chakra-ui/react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -159,7 +160,7 @@ export default function Chatbot({ user }: { user: User }) {
   useEffect(scrollToBottom, [chatMessages]);
 
   return (
-    <section className="bg-white mb-64">
+    <section className="bg-white mb-8">
       <div className="flex items-center justify-between container mx-auto w-3/4">
         <div className="tabs">
           <a className="tab tab-lifted tab-active">
@@ -267,11 +268,11 @@ export default function Chatbot({ user }: { user: User }) {
         </main>
       </div>
       
-      <footer className="mx-auto flex items-center justify-start flex-col space-y-4">
-        <a href="#">
+      <Box position='relative' marginTop='4'>
+        <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
           Powered by ChatGPT. Copyright © 2022 Chatterup.
-        </a>
-      </footer>
+        </AbsoluteCenter>
+      </Box>
     </section>
   );
 }

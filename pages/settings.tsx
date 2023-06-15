@@ -6,7 +6,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { updateUserModel, updateUserPrompt } from '@/utils/supabase-client';
-import { useToast } from '@chakra-ui/react';
+import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -80,7 +80,7 @@ Helpful answer in markdown:
   }
 
   return (
-    <section className="bg-white mb-64">
+    <section className="bg-white mb-8">
     <div className="mx-auto flex items-center justify-start flex-col space-y-4">
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
@@ -104,58 +104,69 @@ Helpful answer in markdown:
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-full">
-                <textarea
-                  disabled={loading}
-                  id="text"
-                  name="text"
-                  autoFocus={true}
-                  rows={15}
-                  placeholder={
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
-                  }
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                />
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="col-span-full">
+            <textarea
+              disabled={loading}
+              id="text"
+              name="text"
+              autoFocus={true}
+              rows={15}
+              placeholder={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
+              }
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+          </div>
+        </div>
 
-            <div className="flex items-start justify-between mt-4">
-              <p className="text-sm leading-6 text-gray-600">
-                Tell your bot how to act.
-                <span 
-                  onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
-                  className='cursor-pointer text-indigo-600'
-                >
-                  {' '} Click to reset to default.
-                </span>
-              </p>
-              <div className="flex items-center justify-end gap-x-6">
-                <button
-                  type="button"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Cancel
-                </button>
-                {loading ? (
-                  <button type="submit" disabled={loading} className="btn btn-wide">
-                    <span className="loading loading-spinner"></span>
-                    Saving
-                  </button>
-                ) : (
-                  <button type="submit" disabled={loading} className="btn btn-outline btn-primary btn-wide">
-                    Save
-                  </button>
-                )}
-              </div>
-            </div>
+        <div className="flex items-start justify-between mt-4">
+          <p className="text-sm leading-6 text-gray-600">
+            Tell your bot how to act.
+            <span 
+              onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
+              className='cursor-pointer text-indigo-600'
+            >
+              {' '} Click to reset to default.
+            </span>
+          </p>
+          <div className="flex items-center justify-end gap-x-6">
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Cancel
+            </button>
+            {loading ? (
+              <button type="submit" disabled={loading} className="btn btn-wide">
+                <span className="loading loading-spinner"></span>
+                Saving
+              </button>
+            ) : (
+              <button 
+                type="submit" 
+                disabled={loading}
+                className={
+                  loading
+                  ? "btn btn-primary btn-wide rounded-full"
+                  : "btn btn-outline btn-primary btn-wide rounded-full"
+                }
+              >
+                Train
+              </button>
+            )}
           </div>
         </div>
       </form>
+
+    <Box position='relative' marginTop='4'>
+      <Divider />
+      <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+        Powered by ChatGPT. Copyright © 2022 Chatterup.
+      </AbsoluteCenter>
+    </Box>
     </div>
     </div>
     </section>
