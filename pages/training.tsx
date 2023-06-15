@@ -40,7 +40,7 @@ export default function Training({ user }: { user: User }) {
   const [scrapedLinks, setScrapedLinks] = useState<string>('');
   const [files, setFiles] = useState<any>('');
   const [scrapedFiles, setScrapedFiles] = useState<string>('');
-  const [trainNew, setTrainNew] = useState<boolean>(true);
+  const [trainNew, setTrainNew] = useState<boolean>(false);
   
   const textEmbed = async (text: string) => {
     setScrapedText('');
@@ -170,83 +170,66 @@ export default function Training({ user }: { user: User }) {
   }
 
   return (
+    <section className="bg-white mb-64">
     <ChatLayout>
-      <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
-        Train Your Bot
-      </h1>
-      <div className="tabs">
-        <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
-          Upload text
-        </a>
-        <a className={tab === 'links' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('links')} >
-          Upload links
-        </a>
-        <a className={tab === 'files' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('files')} >
-          Upload files
-        </a>
+      <div className="flex items-center justify-between">
+        <div className="tabs">
+          <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
+            Upload text
+          </a>
+          <a className={tab === 'links' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('links')} >
+            Upload links
+          </a>
+          <a className={tab === 'files' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('files')} >
+            Upload files
+          </a>
+        </div>
+        <div className="form-control">
+          <label className="label cursor-pointer">
+            <span className="label-text mr-4">Train new bot</span> 
+            <input 
+              type="checkbox" 
+              checked={trainNew} 
+              className="checkbox checkbox-sm checkbox-success" 
+              onChange={() => setTrainNew(!trainNew)}
+            />
+          </label>
+        </div>
       </div>
+      
       <form onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               {tab === 'text' && 
                 <div className="col-span-full">
-                  <div className="flex justify-between">
-                    <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                      {scrapedText === '' ? 'Add text' : 'Scraped text'}
-                    </label>
-                    <div className="form-control">
-                      <label className="label cursor-pointer">
-                        <span className="label-text mr-4">Train new bot</span> 
-                        <input 
-                          type="checkbox" 
-                          checked={trainNew} 
-                          className="checkbox checkbox-sm checkbox-success" 
-                          onChange={() => setTrainNew(!trainNew)}
-                        />
-                      </label>
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    <textarea
-                      disabled={scrapedText != ''}
-                      autoFocus={true}
-                      rows={10}
-                      placeholder={
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
-                      }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={scrapedText === '' ? text : scrapedText}
-                      onChange={(e) => setText(e.target.value)}
-                    />
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-gray-600">
-                    {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
-                  </p>
+                  <textarea
+                    disabled={scrapedText != ''}
+                    autoFocus={true}
+                    rows={15}
+                    placeholder={
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={scrapedText === '' ? text : scrapedText}
+                    onChange={(e) => setText(e.target.value)}
+                  />
                 </div>
               }
 
               {tab === 'links' && 
                 <div className="col-span-full">
-                  <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                    {scrapedLinks === '' ? 'Add links' : 'Scraped links'}
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      disabled={scrapedLinks != ''}
-                      autoFocus={true}
-                      rows={10}
-                      placeholder={
-                        'https://www.example.com\nhttps://www.example.com\nhttps://www.example.com\n...'
-                      }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={scrapedLinks === '' ? links : scrapedLinks}
-                      onChange={(e) => setLinks(e.target.value)}
-                    />
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-gray-600">
-                    {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
-                  </p>
+                  <textarea
+                    disabled={scrapedLinks != ''}
+                    autoFocus={true}
+                    rows={15}
+                    placeholder={
+                      'https://www.example.com\nhttps://www.example.com\nhttps://www.example.com\n...'
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={scrapedLinks === '' ? links : scrapedLinks}
+                    onChange={(e) => setLinks(e.target.value)}
+                  />
                 </div>
               }
 
@@ -255,64 +238,48 @@ export default function Training({ user }: { user: User }) {
                   {!files ?
                     <>
                       <div className="col-span-full">
-                        <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                          Add files
-                        </label>
-                        <div className="mt-2 h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                          <p className='text-sm text-base/loose text-slate-400 pl-2'>
-                            No files yet.
-                          </p>
-                        </div>
-                        <p className="mt-3 text-sm leading-6 text-gray-600">
-                          Upload any number of pdf files, up to 20mb each.
-                        </p>
+                        <textarea
+                          disabled={false}
+                          autoFocus={true}
+                          rows={15}
+                          placeholder={
+                            'No files yet...'
+                          }
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          value={''}
+                          onChange={(e) => console.log('done')}
+                        />
                       </div>
-                      <PickerOverlay
+                      {/* <PickerOverlay
                         apikey={'Al9uEt8XQ067ONx51odaNz'}
                         pickerOptions={{maxFiles: 10, accept: 'application/pdf'}}
                         onSuccess={(res:any) => setFiles(res.filesUploaded)}
                         onUploadDone={(res:any) => setFiles(res.filesUploaded)}
-                      />
+                      /> */}
                     </>
                   :
                     <div className="col-span-full">
                       {scrapedFiles === '' ? 
                         <>
-                          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                            Add files
-                          </label>
-                          <div className="mt-2">
+                          <div className="h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             {files.map((file:any) => (
-                              <div key={file.url} className="mt-2 h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <p className='text-sm text-base/loose text-green-500 pl-2'>
-                                  <a href={file.url} target="_blank" rel="noopener noreferrer">
-                                    {file.filename} ({(file.size/1000000).toFixed(1)}mb)
-                                  </a>
-                                </p>
-                              </div>
+                              <p key={file.url} className='text-sm text-base/loose text-green-500 pl-2'>
+                                <a href={file.url} target="_blank" rel="noopener noreferrer">
+                                  {file.filename} ({(file.size/1000000).toFixed(1)}mb)
+                                </a>
+                              </p>
                             ))}
                           </div>
-                          <p className="mt-3 text-sm leading-6 text-gray-600">
-                            Upload any number of pdf files, up to 20mb each.
-                          </p>
                         </>
                       :
                         <>
-                          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                            Scraped files
-                          </label>
-                          <div className="mt-2">
-                            <textarea
-                              disabled={scrapedFiles != ''}
-                              autoFocus={true}
-                              rows={10}
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              value={scrapedFiles === '' ? links : scrapedFiles}
-                            />
-                          </div>
-                          <p className="mt-3 text-sm leading-6 text-gray-600">
-                            The data from your file uploads.
-                          </p>
+                          <textarea
+                            disabled={scrapedFiles != ''}
+                            autoFocus={true}
+                            rows={15}
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            value={scrapedFiles === '' ? links : scrapedFiles}
+                          />
                         </>
                       }
                     </div>
@@ -320,28 +287,49 @@ export default function Training({ user }: { user: User }) {
                 </>
               }
             </div>
+            
+            <div className="flex items-start justify-between">
+              {tab === 'text' && 
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
+                </p>
+              }
+              {tab === 'links' &&
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
+                </p>
+              }
+              {tab === 'files' && (!files ? 
+                <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
+              :
+                scrapedFiles === '' ?
+                  <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
+                :
+                  <p className="mt-3 text-sm leading-6 text-gray-600">The data from your file uploads.</p>
+              )}
+              <div className="mt-6 flex items-center justify-end gap-x-6">
+                <button
+                  type="button"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Cancel
+                </button>
+                {loading ? (
+                  <button type="submit" disabled={loading} className="btn btn-wide">
+                    <span className="loading loading-spinner"></span>
+                    Training
+                  </button>
+                ) : (
+                  <button type="submit" disabled={loading} className="btn btn-outline btn-primary btn-wide">
+                    Train
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Cancel
-          </button>
-          {loading ? (
-            <button type="submit" disabled={loading} className="btn btn-wide">
-              <span className="loading loading-spinner"></span>
-              Training
-            </button>
-          ) : (
-            <button type="submit" disabled={loading} className="btn btn-outline btn-primary btn-wide">
-              Train
-            </button>
-          )}
         </div>
       </form>
     </ChatLayout>
+    </section>
   );
 }

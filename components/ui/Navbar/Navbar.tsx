@@ -50,9 +50,6 @@ const Navbar = () => {
                   <Link href="/settings" className={s.link}>
                     Settings
                   </Link>
-                  <Link href="/enterprise" className={s.link}>
-                    Enterprise
-                  </Link>
                   <Link href="/account" className={s.link}>
                     Account
                   </Link>

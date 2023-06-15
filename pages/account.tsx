@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
+import ChatLayout from '@/components/chat/Layout';
 
 interface Props {
   title: string;
@@ -96,16 +97,17 @@ export default function Account({ user }: { user: User }) {
     }).format((subscription?.prices?.unit_amount || 0) / 100);
 
   return (
-    <section className="bg-white mb-32">
-      <div className="max-w-6xl mx-auto pt-8 sm:pt-24 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:flex-col sm:align-center">
-          <h1 className="text-4xl font-extrabold text-black sm:text-center sm:text-6xl">
-            Account
-          </h1>
-          <p className="mt-5 text-xl text-zinc-600 sm:text-center sm:text-2xl max-w-2xl m-auto">
-            We partnered with Stripe for a simplified billing.
-          </p>
+    <section className="bg-white mb-64">
+    <ChatLayout>
+      <div className="flex items-center justify-between">
+        <div className="tabs">
+          <a className="tab tab-lifted tab-active">
+            Profile Info
+          </a>
         </div>
+        <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+          Badge
+        </span>
       </div>
       <div className="p-4">
         <Card
@@ -178,6 +180,7 @@ export default function Account({ user }: { user: User }) {
           </div>
         </Card>
       </div>
+    </ChatLayout>
     </section>
   );
 }
