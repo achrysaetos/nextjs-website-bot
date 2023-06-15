@@ -8,7 +8,6 @@ import { supabase } from '@/utils/supabase-client';
 
 async function extractDataFromText(content: string): Promise<Document[]> {
   try {
-    console.log('extracting data from text...');
     const cleanedContent = content.replace(/\s+/g, ' ').trim();
     const contentLength = cleanedContent?.match(/\b\w+\b/g)?.length ?? 0;
     const metadata = { source: undefined, title: undefined, date: undefined, contentLength };
@@ -24,7 +23,6 @@ async function embedDocuments(
   docs: Document[],
   embeddings: Embeddings,
 ) {
-  console.log('creating embeddings...');
   await SupabaseVectorStore.fromDocuments(client, docs, embeddings);
   console.log('storing in supabase... done!');
 }
@@ -46,12 +44,11 @@ export default async function handler(
     try {
       //load data from each url
       const rawDocs = await extractDataFromText(text);
-      console.log(rawDocs);
-      //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
-      //embed docs into supabase
-      await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
-      return res.status(200).json({ message: 'success' });
+      // //split docs into chunks for openai context window
+      // const docs = await splitDocsIntoChunks(rawDocs);
+      // //embed docs into supabase
+      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
+      return res.status(200).json({ message: rawDocs });
     } catch (err: any) {
       console.log(err);
       res

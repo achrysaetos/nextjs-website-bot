@@ -19,7 +19,6 @@ async function extractDataFromUrl(url: string): Promise<Document[]> {
 }
 
 async function extractDataFromUrls(urls: string[]): Promise<Document[]> {
-  console.log('extracting data from urls...');
   const documents: Document[] = [];
   for (const url of urls) {
     const docs = await extractDataFromUrl(url);
@@ -33,7 +32,6 @@ async function embedDocuments(
   docs: Document[],
   embeddings: Embeddings,
 ) {
-  console.log('creating embeddings...');
   await SupabaseVectorStore.fromDocuments(client, docs, embeddings);
   console.log('storing in supabase... done!');
 }
@@ -55,12 +53,11 @@ export default async function handler(
     try {
       //load data from each url
       const rawDocs = await extractDataFromUrls(urls);
-      console.log(rawDocs);
-      //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
-      //embed docs into supabase
-      await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
-      return res.status(200).json({ message: 'success' });
+      // //split docs into chunks for openai context window
+      // const docs = await splitDocsIntoChunks(rawDocs);
+      // //embed docs into supabase
+      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
+      return res.status(200).json({ message: rawDocs });
     } catch (err: any) {
       console.log(err);
       res

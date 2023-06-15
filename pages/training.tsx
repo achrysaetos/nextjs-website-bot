@@ -35,36 +35,15 @@ export default function Training({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
   const [tab, setTab] = useState<string>('text'); // text, links, files
   const [text, setText] = useState<string>('');
+  const [scrapedText, setScrapedText] = useState<string>('');
   const [links, setLinks] = useState<string>('');
+  const [scrapedLinks, setScrapedLinks] = useState<string>('');
   const [files, setFiles] = useState<any>('');
+  const [scrapedFiles, setScrapedFiles] = useState<string>('');
   const [trainNew, setTrainNew] = useState<boolean>(true);
-
-  // api calls
-  const linksEmbed = async (urls: string[]) => {
-    setLoading(true);
-    try {
-      const path = '/api/links-embed';
-      const apiKey = userDetails?.user_api;
-      const res: Response = await fetch(path, {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        credentials: 'same-origin',
-        body: JSON.stringify({urls, apiKey})
-      });
-      if (!res.ok) {
-        console.log('Error in postData', { path, urls, res });
-        throw Error(res.statusText);
-      }
-      console.log("Scraped and embedded the following links: ", urls);
-      setLoading(false);
-      return res.json();
-    } catch (error) {
-      setLoading(false);
-      return alert((error as Error)?.message);
-    }
-  };
   
   const textEmbed = async (text: string) => {
+    setScrapedText('');
     setLoading(true);
     try {
       const path = '/api/text-embed';
@@ -79,16 +58,69 @@ export default function Training({ user }: { user: User }) {
         console.log('Error in postData', { path, text, res });
         throw Error(res.statusText);
       }
-      console.log("Read and embedded the following text: ", text);
+      const response = await res.json();
+      setScrapedText(response.message[0].pageContent)
       setLoading(false);
-      return res.json();
+      return response;
     } catch (error) {
       setLoading(false);
       return alert((error as Error)?.message);
     }
   };
 
-  const filesEmbed = async (files: any) => {
+  const linksEmbed = async (urls: string[]) => {
+    setScrapedLinks('');
+    setLoading(true);
+    try {
+      const path = '/api/links-embed';
+      const apiKey = userDetails?.user_api;
+      const res: Response = await fetch(path, {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        credentials: 'same-origin',
+        body: JSON.stringify({urls, apiKey})
+      });
+      if (!res.ok) {
+        console.log('Error in postData', { path, urls, res });
+        throw Error(res.statusText);
+      }
+      const response = await res.json();
+      setScrapedLinks(response.message[0].pageContent)
+      setLoading(false);
+      return response;
+    } catch (error) {
+      setLoading(false);
+      return alert((error as Error)?.message);
+    }
+  };
+
+  const filesEmbed = async (text: string) => {
+    setScrapedFiles('');
+    setLoading(true);
+    try {
+      const path = '/api/text-embed';
+      const apiKey = userDetails?.user_api;
+      const res: Response = await fetch(path, {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        credentials: 'same-origin',
+        body: JSON.stringify({text, apiKey})
+      });
+      if (!res.ok) {
+        console.log('Error in postData', { path, text, res });
+        throw Error(res.statusText);
+      }
+      const response = await res.json();
+      setScrapedFiles(response.message[0].pageContent)
+      setLoading(false);
+      return response;
+    } catch (error) {
+      setLoading(false);
+      return alert((error as Error)?.message);
+    }
+  };
+
+  const scrapeAndEmbedFiles = async (files: any) => {
     const pdfjs = await import('pdfjs-dist/build/pdf');
     const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
     let fullText = '';
@@ -100,7 +132,7 @@ export default function Training({ user }: { user: User }) {
       const text = (await Promise.all(pageTexts)).join('');
       fullText += text + '\n';
     }
-    textEmbed(fullText)
+    filesEmbed(fullText)
   }
 
   async function handleSubmit(e: any) {
@@ -127,7 +159,7 @@ export default function Training({ user }: { user: User }) {
             alert('Please add some files');
             return;
           }
-          filesEmbed(files)
+          scrapeAndEmbedFiles(files)
           break;
         default:
           break;
@@ -161,7 +193,7 @@ export default function Training({ user }: { user: User }) {
                 <div className="col-span-full">
                   <div className="flex justify-between">
                     <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                      Add text
+                      {scrapedText === '' ? 'Add text' : 'Scraped text'}
                     </label>
                     <div className="form-control">
                       <label className="label cursor-pointer">
@@ -177,21 +209,19 @@ export default function Training({ user }: { user: User }) {
                   </div>
                   <div className="mt-2">
                     <textarea
-                      disabled={loading}
-                      id="text"
-                      name="text"
+                      disabled={scrapedText != ''}
                       autoFocus={true}
                       rows={10}
                       placeholder={
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
                       }
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={text}
+                      value={scrapedText === '' ? text : scrapedText}
                       onChange={(e) => setText(e.target.value)}
                     />
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-600">
-                    Copy and paste text from any source.
+                    {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
                   </p>
                 </div>
               }
@@ -199,25 +229,23 @@ export default function Training({ user }: { user: User }) {
               {tab === 'links' && 
                 <div className="col-span-full">
                   <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                    Add links
+                    {scrapedLinks === '' ? 'Add links' : 'Scraped links'}
                   </label>
                   <div className="mt-2">
                     <textarea
-                      disabled={loading}
-                      id="links"
-                      name="links"
+                      disabled={scrapedLinks != ''}
                       autoFocus={true}
                       rows={10}
                       placeholder={
                         'https://www.example.com\nhttps://www.example.com\nhttps://www.example.com\n...'
                       }
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={links}
+                      value={scrapedLinks === '' ? links : scrapedLinks}
                       onChange={(e) => setLinks(e.target.value)}
                     />
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-600">
-                    Upload website urls, one per line.
+                    {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
                   </p>
                 </div>
               }
@@ -225,29 +253,68 @@ export default function Training({ user }: { user: User }) {
               {tab === 'files' && 
                 <>
                   {!files ?
-                    <PickerOverlay
-                      apikey={'Al9uEt8XQ067ONx51odaNz'}
-                      pickerOptions={{maxFiles: 10, accept: 'application/pdf'}}
-                      onSuccess={(res:any) => setFiles(res.filesUploaded)}
-                      onUploadDone={(res:any) => setFiles(res.filesUploaded)}
-                    />
+                    <>
+                      <div className="col-span-full">
+                        <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                          Add files
+                        </label>
+                        <div className="mt-2 h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                          <p className='text-sm text-base/loose text-slate-400 pl-2'>
+                            No files yet.
+                          </p>
+                        </div>
+                        <p className="mt-3 text-sm leading-6 text-gray-600">
+                          Upload any number of pdf files, up to 20mb each.
+                        </p>
+                      </div>
+                      <PickerOverlay
+                        apikey={'Al9uEt8XQ067ONx51odaNz'}
+                        pickerOptions={{maxFiles: 10, accept: 'application/pdf'}}
+                        onSuccess={(res:any) => setFiles(res.filesUploaded)}
+                        onUploadDone={(res:any) => setFiles(res.filesUploaded)}
+                      />
+                    </>
                   :
                     <div className="col-span-full">
-                      <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                        Add files
-                      </label>
-                      <div className="mt-2">
-                        {files.map((file:any) => (
-                          <p key={file.url} className='text-sm text-base/loose text-green-500'>
-                            <a href={file.url} target="_blank" rel="noopener noreferrer">
-                              {file.filename} ({(file.size/1000000).toFixed(1)}mb)
-                            </a>
+                      {scrapedFiles === '' ? 
+                        <>
+                          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                            Add files
+                          </label>
+                          <div className="mt-2">
+                            {files.map((file:any) => (
+                              <div key={file.url} className="mt-2 h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <p className='text-sm text-base/loose text-green-500 pl-2'>
+                                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                                    {file.filename} ({(file.size/1000000).toFixed(1)}mb)
+                                  </a>
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                          <p className="mt-3 text-sm leading-6 text-gray-600">
+                            Upload any number of pdf files, up to 20mb each.
                           </p>
-                        ))}
-                      </div>
-                      <p className="mt-3 text-sm leading-6 text-gray-600">
-                        Upload any number of pdf files, up to 20mb each.
-                      </p>
+                        </>
+                      :
+                        <>
+                          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                            Scraped files
+                          </label>
+                          <div className="mt-2">
+                            <textarea
+                              disabled={scrapedFiles != ''}
+                              autoFocus={true}
+                              rows={10}
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              value={scrapedFiles === '' ? links : scrapedFiles}
+                            />
+                          </div>
+                          <p className="mt-3 text-sm leading-6 text-gray-600">
+                            The data from your file uploads.
+                          </p>
+                        </>
+                      }
                     </div>
                   }
                 </>
