@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ChatLayout from '@/components/chat/Layout';
 import { GetServerSidePropsContext } from 'next';
 import {
   createServerSupabaseClient,
@@ -7,6 +6,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { PickerOverlay } from 'filestack-react';
+import { useToast } from '@chakra-ui/react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -42,6 +42,8 @@ export default function Training({ user }: { user: User }) {
   const [scrapedLinks, setScrapedLinks] = useState<string>('');
   const [files, setFiles] = useState<any>('');
   const [scrapedFiles, setScrapedFiles] = useState<string>('');
+
+  const toast = useToast();
   
   const textEmbed = async (text: string) => {
     setScrapedText('');
@@ -165,14 +167,31 @@ export default function Training({ user }: { user: User }) {
         default:
           break;
       }
+      toast({
+        title: 'Trained new bot!',
+        position: 'top-right',
+        description: "All training sessions will now use this bot.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
     } catch (error) {
       console.log('error', error);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Could not train your bot.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
   }
 
   return (
     <section className="bg-white mb-64">
-    <ChatLayout>
+    <div className="mx-auto flex items-center justify-start flex-col space-y-4">
+    <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
           <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
@@ -345,7 +364,23 @@ export default function Training({ user }: { user: User }) {
                     Training
                   </button>
                 ) : (
-                  <button type="submit" disabled={loading} className="btn btn-outline btn-primary btn-wide">
+                  <button 
+                    type="submit" 
+                    disabled={
+                      loading || 
+                      (tab === 'text' && (!text || scrapedText != '')) ||
+                      (tab === 'links' && (!links || scrapedLinks!= '')) ||
+                      (tab === 'files' && (!files || scrapedFiles!= ''))
+                    }
+                    className={
+                      (loading || 
+                      (tab === 'text' && (!text || scrapedText != '')) ||
+                      (tab === 'links' && (!links || scrapedLinks!= '')) ||
+                      (tab === 'files' && (!files || scrapedFiles!= '')))
+                      ? "btn btn-primary btn-wide rounded-full"
+                      : "btn btn-outline btn-primary btn-wide rounded-full"
+                    }
+                  >
                     Train
                   </button>
                 )}
@@ -354,7 +389,8 @@ export default function Training({ user }: { user: User }) {
           </div>
         </div>
       </form>
-    </ChatLayout>
+    </div>
+    </div>
     </section>
   );
 }

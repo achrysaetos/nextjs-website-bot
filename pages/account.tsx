@@ -11,7 +11,6 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
-import ChatLayout from '@/components/chat/Layout';
 
 interface Props {
   title: string;
@@ -98,7 +97,8 @@ export default function Account({ user }: { user: User }) {
 
   return (
     <section className="bg-white mb-64">
-    <ChatLayout>
+    <div className="mx-auto flex items-center justify-start flex-col space-y-4">
+    <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
           <a className="tab tab-lifted tab-active">
@@ -215,7 +215,8 @@ export default function Account({ user }: { user: User }) {
           </Card>
         </div>
       </div>
-    </ChatLayout>
+    </div>
+    </div>
     </section>
   );
 }

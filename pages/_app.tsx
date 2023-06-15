@@ -7,6 +7,7 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Layout from '@/components/Layout';
 import { MyUserContextProvider } from '@/utils/useUser';
 import type { Database } from 'types_db';
+import { ChakraProvider } from '@chakra-ui/react'
 
 import 'styles/main.css';
 import 'styles/chrome-bug.css';
@@ -23,9 +24,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <div className="bg-white">
       <SessionContextProvider supabaseClient={supabaseClient}>
         <MyUserContextProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <ChakraProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
         </MyUserContextProvider>
       </SessionContextProvider>
     </div>

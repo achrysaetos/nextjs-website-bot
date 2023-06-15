@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ChatLayout from '@/components/chat/Layout';
 import { GetServerSidePropsContext } from 'next';
 import {
   createServerSupabaseClient,
@@ -7,6 +6,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { updateUserModel, updateUserPrompt } from '@/utils/supabase-client';
+import { useToast } from '@chakra-ui/react';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -35,6 +35,7 @@ export default function Settings({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
   const [model, setModel] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
+  const toast = useToast()
 
   const defaultModel = 'gpt-3.5-turbo';
   const defaultPrompt = `You are a helpful AI assistant. Use the following pieces of context to answer the question at the end.
@@ -57,14 +58,31 @@ Helpful answer in markdown:
     try {
       updateUserPrompt(user, prompt || '');
       updateUserModel(user, model || '');
+      toast({
+        title: 'Saved!',
+        position: 'top-right',
+        description: "Your bot will use these new settings.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
     } catch (error) {
       console.log('error', error);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Could not save your settings.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
   }
 
   return (
     <section className="bg-white mb-64">
-    <ChatLayout>
+    <div className="mx-auto flex items-center justify-start flex-col space-y-4">
+    <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
           <a className="tab tab-lifted tab-active">
@@ -138,7 +156,8 @@ Helpful answer in markdown:
           </div>
         </div>
       </form>
-    </ChatLayout>
+    </div>
+    </div>
     </section>
   );
 }

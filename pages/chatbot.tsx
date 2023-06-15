@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
-import ChatLayout from '@/components/chat/Layout';
 import styles from '@/styles/chatbot.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';

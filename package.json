@@ -9,6 +9,10 @@
     "stripe:listen": "stripe listen --forward-to=localhost:3000/api/webhooks --project-name=saas-starter"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.1.4",
+    "@chakra-ui/react": "^2.7.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@stripe/stripe-js": "^1.48.0",
@@ -24,6 +28,7 @@
     "daisyui": "^3.1.0",
     "dotenv": "^16.0.3",
     "filestack-react": "^4.0.1",
+    "framer-motion": "^10.12.16",
     "langchain": "^0.0.26",
     "next": "^13.2.3",
     "pdfjs-dist": "^3.7.107",
