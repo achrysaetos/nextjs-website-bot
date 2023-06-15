@@ -160,107 +160,119 @@ export default function Chatbot({ user }: { user: User }) {
   useEffect(scrollToBottom, [chatMessages]);
 
   return (
-    <>
-      <ChatLayout>
-        <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
-          Chatterup Support
-        </h1>
-        <div className="mx-auto flex flex-col gap-4">
-          <main className={styles.main}>
-            <div className={styles.cloud}>
-              <div ref={messageListRef} className={styles.messagelist}>
-                {chatMessages.map((message, index) => {
-                  let icon;
-                  let className;
-                  if (message.type === 'apiMessage') {
-                    icon = (
-                      <Image
-                        src="/robot.png"
-                        alt="AI"
-                        width="40"
-                        height="40"
-                        className={styles.boticon}
-                        priority
-                      />
-                    );
-                    className = styles.apimessage;
-                  } else {
-                    icon = (
-                      <Image
-                        src="/profile.png"
-                        alt="You"
-                        width="40"
-                        height="40"
-                        className={styles.usericon}
-                        priority
-                      />
-                    );
-                    // The latest message sent by the user will be animated while waiting for a response
-                    className =
-                      loading && index === chatMessages.length - 1
-                        ? styles.usermessagewaiting
-                        : styles.usermessage;
-                  }
-                  return (
-                    <div key={index} className={className} ref={messagesEndRef}>
-                      {icon}
-                      <div className={styles.markdownanswer}>
-                        <ReactMarkdown linkTarget="_blank">
-                          {message.message}
-                        </ReactMarkdown>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className={styles.center}>
-              <div className={styles.cloudform}>
-                <form onSubmit={handleSubmit}>
-                  <textarea
-                    disabled={loading}
-                    onKeyDown={handleEnter}
-                    ref={textAreaRef}
-                    autoFocus={false}
-                    rows={1}
-                    maxLength={512}
-                    id="userInput"
-                    name="userInput"
-                    placeholder={
-                      loading
-                        ? 'Waiting for response...'
-                        : 'Send a message.'
-                    }
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className={styles.textarea}
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className={styles.generatebutton}
-                  >
-                    {loading ? (
-                      <div className={styles.loadingwheel}>
-                        <LoadingDots color="#000" />
-                      </div>
-                    ) : (
-                      // Send icon SVG in input field
-                      <svg
-                        viewBox="0 0 20 20"
-                        className={styles.svgicon}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                      </svg>
-                    )}
-                  </button>
-                </form>
-              </div>
-            </div>
-          </main>
+    <section className="bg-white mb-64">
+      <div className="flex items-center justify-between container mx-auto w-3/4">
+        <div className="tabs">
+          <a className="tab tab-lifted tab-active">
+            Chatterup Bot
+          </a>
         </div>
-      </ChatLayout>
-    </>
+        <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+          Badge
+        </span>
+      </div>
+
+      <div className="mx-auto flex flex-col gap-4">
+        <main className={styles.main}>
+          <div className={styles.cloud}>
+            <div ref={messageListRef} className={styles.messagelist}>
+              {chatMessages.map((message, index) => {
+                let icon;
+                let className;
+                if (message.type === 'apiMessage') {
+                  icon = (
+                    <Image
+                      src="/robot.png"
+                      alt="AI"
+                      width="40"
+                      height="40"
+                      className={styles.boticon}
+                      priority
+                    />
+                  );
+                  className = styles.apimessage;
+                } else {
+                  icon = (
+                    <Image
+                      src="/profile.png"
+                      alt="You"
+                      width="40"
+                      height="40"
+                      className={styles.usericon}
+                      priority
+                    />
+                  );
+                  // The latest message sent by the user will be animated while waiting for a response
+                  className =
+                    loading && index === chatMessages.length - 1
+                      ? styles.usermessagewaiting
+                      : styles.usermessage;
+                }
+                return (
+                  <div key={index} className={className} ref={messagesEndRef}>
+                    {icon}
+                    <div className={styles.markdownanswer}>
+                      <ReactMarkdown linkTarget="_blank">
+                        {message.message}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className={styles.center}>
+            <div className={styles.cloudform}>
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  disabled={loading}
+                  onKeyDown={handleEnter}
+                  ref={textAreaRef}
+                  autoFocus={false}
+                  rows={1}
+                  maxLength={512}
+                  id="userInput"
+                  name="userInput"
+                  placeholder={
+                    loading
+                      ? 'Waiting for response...'
+                      : 'Send a message.'
+                  }
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className={styles.textarea}
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={styles.generatebutton}
+                >
+                  {loading ? (
+                    <div className={styles.loadingwheel}>
+                      <LoadingDots color="#000" />
+                    </div>
+                  ) : (
+                    // Send icon SVG in input field
+                    <svg
+                      viewBox="0 0 20 20"
+                      className={styles.svgicon}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                    </svg>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+      
+      <footer className="mx-auto flex items-center justify-start flex-col space-y-4">
+        <a href="#">
+          Powered by ChatGPT. Copyright © 2022 Chatterup.
+        </a>
+      </footer>
+    </section>
   );
 }

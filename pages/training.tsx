@@ -175,13 +175,13 @@ export default function Training({ user }: { user: User }) {
       <div className="flex items-center justify-between">
         <div className="tabs">
           <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
-            Upload text
+            Upload Text
           </a>
           <a className={tab === 'links' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('links')} >
-            Upload links
+            Upload Links
           </a>
           <a className={tab === 'files' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('files')} >
-            Upload files
+            Upload Files
           </a>
         </div>
         <div className="form-control">
