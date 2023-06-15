@@ -90,6 +90,9 @@ export default function Chatbot({ user }: { user: User }) {
     const ctrl = new AbortController();
 
     try {
+      const apiKey = userDetails?.user_api;
+      const prompt = userDetails?.user_prompt;
+      const model = userDetails?.user_model;
       fetchEventSource('/api/chat', {
         method: 'POST',
         headers: {
@@ -98,6 +101,9 @@ export default function Chatbot({ user }: { user: User }) {
         body: JSON.stringify({
           question,
           history,
+          apiKey,
+          prompt,
+          model,
         }),
         signal: ctrl.signal,
         onmessage: (event) => {

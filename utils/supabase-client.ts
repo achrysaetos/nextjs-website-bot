@@ -6,14 +6,6 @@ import {
 import { ProductWithPrice } from 'types';
 import type { Database } from 'types_db';
 
-import { createClient } from '@supabase/supabase-js';
-
-// // Create a single supabase client for interacting with your database
-// export const supabaseClient = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-//   process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-// );
-
 export const supabase = createBrowserSupabaseClient<Database>();
 
 export const getActiveProductsWithPrices = async (): Promise<

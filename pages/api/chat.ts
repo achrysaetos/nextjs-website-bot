@@ -15,40 +15,30 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`);
 
-const QA_PROMPT = PromptTemplate.fromTemplate(
-`You are an enthusiastic AI assistant and an expert in the content of the document provided below. 
-You are given the following extracted parts of a long document and a question. 
-Provide a conversational answer based on the context provided. Your goal is to be as helpful as possible.
-If you can't find the answer in the context below, just say "Hmm, I'm not sure." -- don't try to make up an answer.
-If the question is not related to the context provided, politely inform them that you are tuned to only answer related questions.
-
-Question: {question}
-=========
-{context}
-=========
-Answer in Markdown:`,
-);
-
 export const makeChain = (
+  apiKey: string,
+  prompt: string,
+  model: string,
   vectorstore: SupabaseVectorStore,
   onTokenStream?: (token: string) => void,
 ) => {
+  const QA_PROMPT = PromptTemplate.fromTemplate(prompt);
   const questionGenerator = new LLMChain({
     llm: new OpenAI({ 
       temperature: 0, 
-      openAIApiKey: ''
+      openAIApiKey: apiKey
     }),
     prompt: CONDENSE_PROMPT,
   });
   const docChain = loadQAChain(
     new OpenAI({
       temperature: 0,
-      modelName: 'gpt-3.5-turbo', // default is text-davinci-003 (expensive but better)
+      modelName: model, // default is text-davinci-003 (expensive but better)
       streaming: Boolean(onTokenStream),
       callbackManager: {
         handleNewToken: onTokenStream,
       },
-      openAIApiKey: ''
+      openAIApiKey: apiKey
     }),
     { prompt: QA_PROMPT },
   );
@@ -64,7 +54,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { question, history } = req.body;
+  const { question, history, apiKey, prompt, model } = req.body;
 
   if (!question) {
     return res.status(400).json({ message: 'No question in the request' });
@@ -75,7 +65,7 @@ export default async function handler(
   /* create vectorstore*/
   const vectorStore = await SupabaseVectorStore.fromExistingIndex(
     supabase,
-    new OpenAIEmbeddings({openAIApiKey: ''}),
+    new OpenAIEmbeddings({openAIApiKey: apiKey}),
   );
 
   res.writeHead(200, {
@@ -91,7 +81,7 @@ export default async function handler(
   sendData(JSON.stringify({ data: '' }));
 
   // create the chain
-  const chain = makeChain(vectorStore, (token: string) => {
+  const chain = makeChain(apiKey, prompt, model, vectorStore, (token: string) => {
     sendData(JSON.stringify({ data: token }));
   });
 

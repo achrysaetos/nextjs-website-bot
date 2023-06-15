@@ -42,14 +42,15 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
+    const { text, apiKey } = req.body;
     try {
       //load data from each url
-      const rawDocs = await extractDataFromText(req.body);
+      const rawDocs = await extractDataFromText(text);
       console.log(rawDocs);
-      // //split docs into chunks for openai context window
-      // const docs = await splitDocsIntoChunks(rawDocs);
-      // //embed docs into supabase
-      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: ''}));
+      //split docs into chunks for openai context window
+      const docs = await splitDocsIntoChunks(rawDocs);
+      //embed docs into supabase
+      await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
       return res.status(200).json({ message: 'success' });
     } catch (err: any) {
       console.log(err);

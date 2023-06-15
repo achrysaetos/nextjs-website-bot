@@ -44,11 +44,12 @@ export default function Training({ user }: { user: User }) {
     setLoading(true);
     try {
       const path = '/api/links-embed';
+      const apiKey = userDetails?.user_api;
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify(urls)
+        body: JSON.stringify({urls, apiKey})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, urls, res });
@@ -67,11 +68,12 @@ export default function Training({ user }: { user: User }) {
     setLoading(true);
     try {
       const path = '/api/text-embed';
+      const apiKey = userDetails?.user_api;
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify(text)
+        body: JSON.stringify({text, apiKey})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
