@@ -34,13 +34,14 @@ export default function Training({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const { isLoading, subscription, userDetails } = useUser();
   const [tab, setTab] = useState<string>('text'); // text, links, files
+  const [trainNew, setTrainNew] = useState<boolean>(false);
+  
   const [text, setText] = useState<string>('');
   const [scrapedText, setScrapedText] = useState<string>('');
   const [links, setLinks] = useState<string>('');
   const [scrapedLinks, setScrapedLinks] = useState<string>('');
   const [files, setFiles] = useState<any>('');
   const [scrapedFiles, setScrapedFiles] = useState<string>('');
-  const [trainNew, setTrainNew] = useState<boolean>(false);
   
   const textEmbed = async (text: string) => {
     setScrapedText('');
@@ -292,11 +293,27 @@ export default function Training({ user }: { user: User }) {
               {tab === 'text' && 
                 <p className="mt-3 text-sm leading-6 text-gray-600">
                   {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
+                  {scrapedText != '' && 
+                    <span 
+                      onClick={() => {setText(''); setScrapedText('')}}
+                      className='cursor-pointer text-indigo-600'
+                    >
+                      {' '} Click to add new text.
+                    </span>
+                  }
                 </p>
               }
               {tab === 'links' &&
                 <p className="mt-3 text-sm leading-6 text-gray-600">
                   {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
+                  {scrapedLinks != '' && 
+                    <span 
+                      onClick={() => {setLinks(''); setScrapedLinks('')}}
+                      className='cursor-pointer text-indigo-600'
+                    >
+                      {' '} Click to add new links.
+                    </span>
+                  }
                 </p>
               }
               {tab === 'files' && (!files ? 
@@ -305,9 +322,17 @@ export default function Training({ user }: { user: User }) {
                 scrapedFiles === '' ?
                   <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
                 :
-                  <p className="mt-3 text-sm leading-6 text-gray-600">The data from your file uploads.</p>
+                  <p className="mt-3 text-sm leading-6 text-gray-600">
+                    The data from your file uploads.
+                    <span 
+                      onClick={() => {setFiles(''); setScrapedFiles('')}}
+                      className='cursor-pointer text-indigo-600'
+                    >
+                      {' '} Click to add new files.
+                    </span>
+                  </p>
               )}
-              <div className="mt-6 flex items-center justify-end gap-x-6">
+              <div className="flex items-center justify-end gap-x-6 mt-4">
                 <button
                   type="button"
                   className="text-sm font-semibold leading-6 text-gray-900"

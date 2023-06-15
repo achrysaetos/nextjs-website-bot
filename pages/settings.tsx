@@ -36,6 +36,17 @@ export default function Settings({ user }: { user: User }) {
   const [model, setModel] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
 
+  const defaultModel = 'gpt-3.5-turbo';
+  const defaultPrompt = `You are a helpful AI assistant. Use the following pieces of context to answer the question at the end.
+If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
+If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+
+{context}
+
+Question: {question}
+Helpful answer in markdown:
+`;
+
   useEffect(() => {
     setPrompt(userDetails?.user_prompt || '');
     setModel(userDetails?.user_model || '');
@@ -95,11 +106,17 @@ export default function Settings({ user }: { user: User }) {
               </div>
             </div>
 
-            <div className="flex items-start justify-between">
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                Tell your bot how to act. The more specific the prompt, the more accurate the response.
+            <div className="flex items-start justify-between mt-4">
+              <p className="text-sm leading-6 text-gray-600">
+                Tell your bot how to act.
+                <span 
+                  onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
+                  className='cursor-pointer text-indigo-600'
+                >
+                  {' '} Click to reset to default.
+                </span>
               </p>
-              <div className="mt-6 flex items-center justify-end gap-x-6">
+              <div className="flex items-center justify-end gap-x-6">
                 <button
                   type="button"
                   className="text-sm font-semibold leading-6 text-gray-900"
