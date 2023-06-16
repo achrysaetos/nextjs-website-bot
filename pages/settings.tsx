@@ -64,6 +64,7 @@ Helpful answer in markdown:
         position: 'top-right',
         description: "Your bot will use these new settings.",
         status: 'success',
+        colorScheme: 'teal',
         duration: 3000,
         isClosable: true,
       })

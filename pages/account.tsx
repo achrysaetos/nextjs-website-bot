@@ -11,7 +11,8 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
-import { Box, Divider, AbsoluteCenter, Center } from '@chakra-ui/react';
+import { Box, Divider, AbsoluteCenter, Center, useToast } from '@chakra-ui/react';
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 interface Props {
   title: string;
@@ -22,13 +23,13 @@ interface Props {
 
 function Card({ title, description, footer, children }: Props) {
   return (
-    <div className="border border-zinc-700	max-w-3xl w-full p rounded-md m-auto mb-8">
+    <div className="bg-white border border-gray-200 rounded-lg shadow max-w-3xl w-full m-auto mb-8">
       <div className="px-5 py-4">
-        <h3 className="text-2xl mb-1 font-medium">{title}</h3>
+        <h3 className="text-2xl mb-1 font-medium text-teal-700">{title}</h3>
         <p className="text-zinc-600">{description}</p>
         {children}
       </div>
-      <div className="border-t border-zinc-700 bg-zinc-100 p-4 text-zinc-500 rounded-b-md">
+      <div className="bg-zinc-100 px-5 py-4 text-zinc-500 rounded-b-md">
         {footer}
       </div>
     </div>
@@ -62,6 +63,8 @@ export default function Account({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
   const [apikey, setApiKey] = useState<string>('');
 
+  const toast = useToast();
+
   useEffect(() => {
     setApiKey(userDetails?.user_api || '');
   }, [userDetails]);
@@ -70,8 +73,25 @@ export default function Account({ user }: { user: User }) {
     e.preventDefault();
     try {
       updateUserApi(user, apikey || '');
+      toast({
+        title: 'API key saved!',
+        position: 'top-right',
+        description: "You have unlocked infinite messages.",
+        status: 'success',
+        colorScheme: 'teal',
+        duration: 3000,
+        isClosable: true,
+      })
     } catch (error) {
       console.log('error', error);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please try again.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
   }
 
@@ -156,27 +176,29 @@ export default function Account({ user }: { user: User }) {
                   Check your usage statistics on OpenAI.
                 </p>
                 <form action="https://platform.openai.com/account/usage" target="_blank" rel="noopener noreferrer">
-                  <Button variant="slim" type="submit">
+                  <button type="submit" className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 btn-wide rounded-full'>
                     Open usage statistics
-                  </Button>
+                  </button>
                 </form>
               </div>
             }
           >
             <form onSubmit={handleSubmit}>
-              <div className="w-2/3">
-                <input
-                  className="mt-8 mb-4 w-3/4 bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                  placeholder="Enter your API key"
-                  value={apikey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                />
-                <button
-                  type="submit"
-                  className="flex-none w-1/4 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                >
-                  Submit
-                </button>
+              <div className="w-full">
+                <div className="form-control">
+                  <div className="input-group mt-8 mb-4">
+                    <input 
+                      type="text" 
+                      placeholder="Paste your API key here" 
+                      className="input input-bordered w-full focus:ring-0 focus:border-teal-700 focus:outline-none" 
+                      value={apikey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                    />
+                    <button type="submit" disabled={apikey === ''} className="btn btn-square bg-teal-700 ring-teal-700">
+                      <PaperAirplaneIcon className={apikey === '' ? "w-5 h-5 text-black" : "w-5 h-5 text-white"} />
+                    </button>
+                  </div>
+                </div>
               </div>
             </form>
           </Card>
@@ -193,14 +215,14 @@ export default function Account({ user }: { user: User }) {
                 <p className="pb-4 sm:pb-0">
                   Manage your subscription on Stripe.
                 </p>
-                <Button
-                  variant="slim"
-                  loading={loading}
+                <button
+                  type="submit" 
+                  className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 btn-wide rounded-full'
                   disabled={loading || !subscription}
                   onClick={redirectToCustomerPortal}
                 >
                   Open customer portal
-                </Button>
+                </button>
               </div>
             }
           >
