@@ -7,6 +7,8 @@ import {
 import { useUser } from '@/utils/useUser';
 import { PickerOverlay } from 'filestack-react';
 import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
+import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -44,6 +46,7 @@ export default function Training({ user }: { user: User }) {
   const [scrapedFiles, setScrapedFiles] = useState<string>('');
 
   const toast = useToast();
+  const [filePicker, setFilePicker] = useState<boolean>(false);
   
   const textEmbed = async (text: string) => {
     setScrapedText('');
@@ -194,13 +197,13 @@ export default function Training({ user }: { user: User }) {
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
-          <a className={tab === 'text' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('text')} >
+          <a className={tab === 'text' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('text')} >
             Upload Text
           </a>
-          <a className={tab === 'links' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('links')} >
+          <a className={tab === 'links' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('links')} >
             Upload Links
           </a>
-          <a className={tab === 'files' ? "tab tab-lifted tab-active" : "tab tab-lifted"} onClick={() => setTab('files')} >
+          <a className={tab === 'files' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('files')} >
             Upload Files
           </a>
         </div>
@@ -256,30 +259,31 @@ export default function Training({ user }: { user: User }) {
               {!files ?
                 <>
                   <div className="col-span-full">
-                    <textarea
-                      disabled={false}
-                      autoFocus={true}
-                      rows={15}
-                      placeholder={
-                        'No files yet...'
-                      }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={''}
-                      onChange={(e) => console.log('done')}
-                    />
+                    <div className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-32">
+                      <div className="text-center">
+                        <DocumentArrowUpIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                          <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                            <span onClick={() => setFilePicker(!filePicker)}>Upload a file</span>
+                          </label>
+                          <p className="pl-1">(nothing here yet)</p>
+                        </div>
+                        <p className="text-xs leading-5 text-gray-600">PDFs up to 20MB</p>
+                      </div>
+                    </div>
                   </div>
-                  {/* <PickerOverlay
+                  <PickerOverlay
                     apikey={'Al9uEt8XQ067ONx51odaNz'}
                     pickerOptions={{maxFiles: 10, accept: 'application/pdf'}}
                     onSuccess={(res:any) => setFiles(res.filesUploaded)}
                     onUploadDone={(res:any) => setFiles(res.filesUploaded)}
-                  /> */}
+                  />
                 </>
               :
                 <div className="col-span-full">
                   {scrapedFiles === '' ? 
                     <>
-                      <div className="h-64 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <div className="h-96 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         {files.map((file:any) => (
                           <p key={file.url} className='text-sm text-base/loose text-green-500 pl-2'>
                             <a href={file.url} target="_blank" rel="noopener noreferrer">
@@ -350,12 +354,9 @@ export default function Training({ user }: { user: User }) {
               </p>
           )}
           <div className="flex items-center justify-end gap-x-6 mt-4">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
+            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900">
               Cancel
-            </button>
+            </Link>
             {loading ? (
               <button type="submit" disabled={loading} className="btn btn-wide">
                 <span className="loading loading-spinner"></span>

@@ -7,6 +7,7 @@ import {
 import { useUser } from '@/utils/useUser';
 import { updateUserModel, updateUserPrompt } from '@/utils/supabase-client';
 import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
+import Link from 'next/link';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -85,7 +86,7 @@ Helpful answer in markdown:
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
-          <a className="tab tab-lifted tab-active">
+          <a className="tab tab-lifted tab-active font-semibold">
             Enter Prompt
           </a>
         </div>
@@ -133,12 +134,9 @@ Helpful answer in markdown:
             </span>
           </p>
           <div className="flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
+            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900">
               Cancel
-            </button>
+            </Link>
             {loading ? (
               <button type="submit" disabled={loading} className="btn btn-wide">
                 <span className="loading loading-spinner"></span>
@@ -147,9 +145,15 @@ Helpful answer in markdown:
             ) : (
               <button 
                 type="submit" 
-                disabled={loading}
+                disabled={
+                  loading || 
+                  prompt === '' ||
+                  (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
+                }
                 className={
-                  loading
+                  loading || 
+                  prompt === '' ||
+                  (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
                   ? "btn btn-primary btn-wide rounded-full"
                   : "btn btn-outline btn-primary btn-wide rounded-full"
                 }

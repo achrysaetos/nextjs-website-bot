@@ -163,7 +163,7 @@ export default function Chatbot({ user }: { user: User }) {
     <section className="bg-white mb-8">
       <div className="flex items-center justify-between container mx-auto w-3/4">
         <div className="tabs">
-          <a className="tab tab-lifted tab-active">
+          <a className="tab tab-lifted tab-active font-semibold">
             Chatterup Bot
           </a>
         </div>
