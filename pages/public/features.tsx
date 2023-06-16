@@ -1,4 +1,5 @@
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon, } from "@heroicons/react/24/outline";
+import Footer from '@/components/ui/Footer';
 
 export default function Features() {
   return (
@@ -132,6 +133,8 @@ export default function Features() {
           </figure>
         </div>
       </section>
+
+      <Footer />
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import Footer from '@/components/ui/Footer';
 
 const questions = [
   {
@@ -65,6 +66,8 @@ export default function FAQ() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </>
   )
 }

@@ -3,17 +3,14 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Navbar from '@/components/ui/Navbar';
-import Footer from '@/components/ui/Footer';
 
 import { PageMeta } from '../types';
-import { useUser } from '@/utils/useUser';
 
 interface Props extends PropsWithChildren {
   meta?: PageMeta;
 }
 
 export default function Layout({ children, meta: pageMeta }: Props) {
-  const { user } = useUser();
   const router = useRouter();
   const meta = {
     title: 'Next.js Subscription Starter',
@@ -46,7 +43,6 @@ export default function Layout({ children, meta: pageMeta }: Props) {
       </Head>
       <Navbar />
       <main id="skip">{children}</main>
-      {!user ? <Footer /> : <></>}
     </>
   );
 }

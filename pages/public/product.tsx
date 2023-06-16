@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from '@/components/ui/Footer';
 
 const links = [
   { name: 'Open roles', href: '#' },
@@ -175,6 +176,8 @@ export default function Product() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }

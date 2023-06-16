@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon, ServerIcon, } from "@heroicons/react/24/outline";
+import Footer from "@/components/ui/Footer/Footer";
 
 const features_section1 = [
   {
@@ -81,7 +82,7 @@ export default function Landing() {
                   fugiat aliqua.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
-                  <Link href="/pricing" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <Link href="/public/pricing" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                       Get started
                   </Link>
                   <Link href="/public/features" className="text-sm font-semibold leading-6 text-gray-900">
@@ -221,7 +222,7 @@ export default function Landing() {
                   Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                  <Link href="/pricing" className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                  <Link href="/public/pricing" className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                       Get started
                   </Link>
                   <Link href="/public/features" className="text-sm font-semibold leading-6 text-white">
@@ -242,6 +243,8 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 }

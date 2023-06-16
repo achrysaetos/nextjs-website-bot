@@ -32,7 +32,7 @@ const Navbar = () => {
                   <Link href="/public/features" className={s.link}>
                     Features
                   </Link>
-                  <Link href="/pricing" className={s.link}>
+                  <Link href="/public/pricing" className={s.link}>
                     Pricing
                   </Link>
                   <Link href="/public/faq" className={s.link}>
