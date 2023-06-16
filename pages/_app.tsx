@@ -8,6 +8,7 @@ import Layout from '@/components/Layout';
 import { MyUserContextProvider } from '@/utils/useUser';
 import type { Database } from 'types_db';
 import { ChakraProvider } from '@chakra-ui/react'
+import { SaveContext } from '@/utils/context';
 
 import 'styles/main.css';
 import 'styles/chrome-bug.css';
@@ -20,15 +21,22 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     document.body.classList?.remove('loading');
   }, []);
 
+  const [user_api, setUserApi] = useState<string>("");
+  const [user_prompt, setUserPrompt] = useState<string>("");
+  const [user_model, setUserModel] = useState<string>("");
+  const saved = { user_api, setUserApi, user_prompt, setUserPrompt, user_model, setUserModel };
+
   return (
     <div className="bg-white">
       <SessionContextProvider supabaseClient={supabaseClient}>
         <MyUserContextProvider>
-          <ChakraProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ChakraProvider>
+          <SaveContext.Provider value={saved}>
+            <ChakraProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ChakraProvider>
+          </SaveContext.Provider>
         </MyUserContextProvider>
       </SessionContextProvider>
     </div>

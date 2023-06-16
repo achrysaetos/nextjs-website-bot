@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import {
   createServerSupabaseClient,
@@ -8,6 +8,7 @@ import { useUser } from '@/utils/useUser';
 import { updateUserModel, updateUserPrompt } from '@/utils/supabase-client';
 import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
 import Link from 'next/link';
+import { SaveContext } from '@/utils/context';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -36,6 +37,7 @@ export default function Settings({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
   const [model, setModel] = useState<string>('');
   const [prompt, setPrompt] = useState<string>('');
+  const { user_prompt, setUserPrompt, user_model, setUserModel } = useContext(SaveContext);
   const toast = useToast()
 
   const defaultModel = 'gpt-3.5-turbo';
@@ -50,13 +52,15 @@ Helpful answer in markdown:
 `;
 
   useEffect(() => {
-    setPrompt(userDetails?.user_prompt || '');
-    setModel(userDetails?.user_model || '');
+    setPrompt(user_prompt || userDetails?.user_prompt || '');
+    setModel(user_model || userDetails?.user_model || '');
   }, [userDetails]);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
     try {
+      setUserPrompt(prompt || '');
+      setUserModel(model || '');
       updateUserPrompt(user, prompt || '');
       updateUserModel(user, model || '');
       toast({

@@ -1,4 +1,4 @@
-import { useState, ReactNode, useEffect } from 'react';
+import { useState, ReactNode, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
 import {
@@ -13,6 +13,7 @@ import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
 import { Box, Divider, AbsoluteCenter, Center, useToast } from '@chakra-ui/react';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { SaveContext } from '@/utils/context';
 
 interface Props {
   title: string;
@@ -62,16 +63,17 @@ export default function Account({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const { isLoading, subscription, userDetails } = useUser();
   const [apikey, setApiKey] = useState<string>('');
-
+  const { user_api, setUserApi } = useContext(SaveContext);
   const toast = useToast();
 
   useEffect(() => {
-    setApiKey(userDetails?.user_api || '');
+    setApiKey(user_api || userDetails?.user_api || '');
   }, [userDetails]);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
     try {
+      setUserApi(apikey || '');
       updateUserApi(user, apikey || '');
       toast({
         title: 'API key saved!',

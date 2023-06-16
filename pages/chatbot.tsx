@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, useContext } from 'react';
 import styles from '@/styles/chatbot.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
@@ -9,6 +9,7 @@ import { GetServerSidePropsContext } from 'next';
 import { createServerSupabaseClient, User} from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { Box, Divider, AbsoluteCenter } from '@chakra-ui/react';
+import { SaveContext } from '@/utils/context';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -34,6 +35,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 export default function Chatbot({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
+  const { user_api, user_prompt, user_model } = useContext(SaveContext);
 
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -90,9 +92,9 @@ export default function Chatbot({ user }: { user: User }) {
     const ctrl = new AbortController();
 
     try {
-      const apiKey = userDetails?.user_api;
-      const prompt = userDetails?.user_prompt;
-      const model = userDetails?.user_model;
+      const apiKey = user_api || userDetails?.user_api;
+      const prompt = user_prompt || userDetails?.user_prompt;
+      const model = user_model || userDetails?.user_model;
       fetchEventSource('/api/chat', {
         method: 'POST',
         headers: {
