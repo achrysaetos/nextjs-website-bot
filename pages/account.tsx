@@ -102,7 +102,7 @@ export default function Account({ user }: { user: User }) {
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
-          <a className="tab tab-lifted tab-active font-semibold">
+          <a className="tab tab-lifted tab-active text-teal-700 font-semibold">
             Profile Info
           </a>
         </div>

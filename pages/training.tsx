@@ -6,9 +6,10 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { PickerOverlay } from 'filestack-react';
-import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
+import { AbsoluteCenter, Box, Checkbox, Divider, useToast } from '@chakra-ui/react';
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -175,6 +176,7 @@ export default function Training({ user }: { user: User }) {
         position: 'top-right',
         description: "All training sessions will now use this bot.",
         status: 'success',
+        colorScheme: 'teal',
         duration: 3000,
         isClosable: true,
       })
@@ -197,26 +199,24 @@ export default function Training({ user }: { user: User }) {
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
-          <a className={tab === 'text' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('text')} >
+          <a className={tab === 'text' ? "tab tab-lifted tab-active text-teal-700 font-semibold" : "tab tab-lifted hover:text-teal-700 font-semibold"} onClick={() => setTab('text')} >
             Upload Text
           </a>
-          <a className={tab === 'links' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('links')} >
+          <a className={tab === 'links' ? "tab tab-lifted tab-active text-teal-700 font-semibold" : "tab tab-lifted hover:text-teal-700 font-semibold"} onClick={() => setTab('links')} >
             Upload Links
           </a>
-          <a className={tab === 'files' ? "tab tab-lifted tab-active font-semibold" : "tab tab-lifted font-semibold"} onClick={() => setTab('files')} >
+          <a className={tab === 'files' ? "tab tab-lifted tab-active text-teal-700 font-semibold" : "tab tab-lifted hover:text-teal-700 font-semibold"} onClick={() => setTab('files')} >
             Upload Files
           </a>
         </div>
-        <div className="form-control">
-          <label className="label cursor-pointer">
-            <span className="label-text mr-4">Train new bot</span> 
-            <input 
-              type="checkbox" 
-              checked={trainNew} 
-              className="checkbox checkbox-sm checkbox-success" 
-              onChange={() => setTrainNew(!trainNew)}
-            />
-          </label>
+        <div className="flex items-center justify-between">
+          <span 
+            className='text-sm font-semibold mr-2 cursor-pointer text-teal-700 select-none'
+            onClick={() => {setTrainNew(!trainNew); console.log(trainNew)}} 
+          >
+            Train new bot
+          </span>
+          <Checkbox isChecked={trainNew} colorScheme='teal' marginRight='4'/>
         </div>
       </div>
       
@@ -231,7 +231,7 @@ export default function Training({ user }: { user: User }) {
                 placeholder={
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
                 }
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-teal-700 sm:text-sm sm:leading-6"
                 value={scrapedText === '' ? text : scrapedText}
                 onChange={(e) => setText(e.target.value)}
               />
@@ -247,7 +247,7 @@ export default function Training({ user }: { user: User }) {
                 placeholder={
                   'https://www.example.com\nhttps://www.example.com\nhttps://www.example.com\n...'
                 }
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-teal-700 sm:text-sm sm:leading-6"
                 value={scrapedLinks === '' ? links : scrapedLinks}
                 onChange={(e) => setLinks(e.target.value)}
               />
@@ -263,7 +263,7 @@ export default function Training({ user }: { user: User }) {
                       <div className="text-center">
                         <DocumentArrowUpIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                         <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                          <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                          <label className="relative cursor-pointer rounded-md bg-white font-semibold text-teal-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-teal-700 focus-within:ring-offset-2 hover:text-teal-700">
                             <span onClick={() => setFilePicker(!filePicker)}>Upload a file</span>
                           </label>
                           <p className="pl-1">(nothing here yet)</p>
@@ -283,11 +283,12 @@ export default function Training({ user }: { user: User }) {
                 <div className="col-span-full">
                   {scrapedFiles === '' ? 
                     <>
-                      <div className="h-96 block w-full rounded-md border-2 border-indigo-600 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <div className="h-96 block w-full rounded-md border-0 ring-1 ring-inset ring-gray-300 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6">
                         {files.map((file:any) => (
-                          <p key={file.url} className='text-sm text-base/loose text-green-500 pl-2'>
-                            <a href={file.url} target="_blank" rel="noopener noreferrer">
+                          <p key={file.url} className='text-sm text-base/loose text-teal-700 font-semibold pl-2'>
+                            <a href={file.url} target="_blank" rel="noopener noreferrer" className='flex items-center justify-content'>
                               {file.filename} ({(file.size/1000000).toFixed(1)}mb)
+                              <ArrowTopRightOnSquareIcon className="inline h-4 w-4 ml-1" />
                             </a>
                           </p>
                         ))}
@@ -299,7 +300,7 @@ export default function Training({ user }: { user: User }) {
                         disabled={scrapedFiles != ''}
                         autoFocus={true}
                         rows={15}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-teal-700 sm:text-sm sm:leading-6"
                         value={scrapedFiles === '' ? links : scrapedFiles}
                       />
                     </>
@@ -317,7 +318,7 @@ export default function Training({ user }: { user: User }) {
               {scrapedText != '' && 
                 <span 
                   onClick={() => {setText(''); setScrapedText('')}}
-                  className='cursor-pointer text-indigo-600'
+                  className='cursor-pointer text-teal-700 font-semibold select-none'
                 >
                   {' '} Click to add new text.
                 </span>
@@ -330,7 +331,7 @@ export default function Training({ user }: { user: User }) {
               {scrapedLinks != '' && 
                 <span 
                   onClick={() => {setLinks(''); setScrapedLinks('')}}
-                  className='cursor-pointer text-indigo-600'
+                  className='cursor-pointer text-teal-700 font-semibold select-none'
                 >
                   {' '} Click to add new links.
                 </span>
@@ -347,14 +348,14 @@ export default function Training({ user }: { user: User }) {
                 The data from your file uploads.
                 <span 
                   onClick={() => {setFiles(''); setScrapedFiles('')}}
-                  className='cursor-pointer text-indigo-600'
+                  className='cursor-pointer text-teal-700 font-semibold select-none'
                 >
                   {' '} Click to add new files.
                 </span>
               </p>
           )}
           <div className="flex items-center justify-end gap-x-6 mt-4">
-            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-teal-700">
               Cancel
             </Link>
             {loading ? (
@@ -377,7 +378,7 @@ export default function Training({ user }: { user: User }) {
                   (tab === 'links' && (!links || scrapedLinks!= '')) ||
                   (tab === 'files' && (!files || scrapedFiles!= '')))
                   ? "btn btn-primary btn-wide rounded-full"
-                  : "btn btn-outline btn-primary btn-wide rounded-full"
+                  : "btn btn-outline text-teal-700 hover:bg-teal-700 btn-wide rounded-full"
                 }
               >
                 Train

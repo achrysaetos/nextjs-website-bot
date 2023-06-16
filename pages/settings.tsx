@@ -86,12 +86,12 @@ Helpful answer in markdown:
     <div className="container mx-auto w-3/4">
       <div className="flex items-center justify-between">
         <div className="tabs">
-          <a className="tab tab-lifted tab-active font-semibold">
+          <a className="tab tab-lifted tab-active text-teal-700 font-semibold mb-2">
             Enter Prompt
           </a>
         </div>
         <select 
-          className="select select-ghost max-w-xs focus:outline-none" 
+          className="text-sm font-semibold border-none focus:outline-none focus:border-none focus:ring-0 focus:text-teal-700 text-teal-700" 
           value={model}
           onChange={(e) => setModel(e.target.value)}
         >
@@ -116,7 +116,7 @@ Helpful answer in markdown:
               placeholder={
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n...'
               }
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-teal-700 sm:text-sm sm:leading-6"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
@@ -128,17 +128,17 @@ Helpful answer in markdown:
             Tell your bot how to act.
             <span 
               onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
-              className='cursor-pointer text-indigo-600'
+              className='cursor-pointer text-teal-700 font-semibold select-none'
             >
               {' '} Click to reset to default.
             </span>
           </p>
           <div className="flex items-center justify-end gap-x-6">
-            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-teal-700">
               Cancel
             </Link>
             {loading ? (
-              <button type="submit" disabled={loading} className="btn btn-wide">
+              <button type="submit" disabled={loading} className="btn btn-primary btn-wide rounded-full">
                 <span className="loading loading-spinner"></span>
                 Saving
               </button>
@@ -155,10 +155,10 @@ Helpful answer in markdown:
                   prompt === '' ||
                   (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
                   ? "btn btn-primary btn-wide rounded-full"
-                  : "btn btn-outline btn-primary btn-wide rounded-full"
+                  : "btn btn-outline text-teal-700 hover:bg-teal-700 btn-wide rounded-full"
                 }
               >
-                Train
+                Save
               </button>
             )}
           </div>

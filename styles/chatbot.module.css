@@ -37,8 +37,8 @@
 
 .textarea:focus {
   outline: none;
-  border-color: #6b7280;
-  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.5);
+  border-color: teal;
+  box-shadow: 0 0 0 2px #c9dedd
 }
 
 .textarea::placeholder {
