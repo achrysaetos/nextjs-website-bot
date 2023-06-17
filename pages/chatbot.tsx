@@ -39,6 +39,7 @@ export default function Chatbot({ user }: { user: User }) {
 
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [messageState, setMessageState] = useState<{
     messages: Message[];
     pending?: string;
@@ -82,20 +83,16 @@ export default function Chatbot({ user }: { user: User }) {
           message: question,
         },
       ],
-      pending: undefined,
     }));
 
     setLoading(true);
     setQuery('');
-    setMessageState((state) => ({ ...state, pending: '' }));
-
-    const ctrl = new AbortController();
 
     try {
       const apiKey = user_api || userDetails?.user_api;
       const prompt = user_prompt || userDetails?.user_prompt;
       const model = user_model || userDetails?.user_model;
-      fetchEventSource('/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,33 +104,35 @@ export default function Chatbot({ user }: { user: User }) {
           prompt,
           model,
         }),
-        signal: ctrl.signal,
-        onmessage: (event) => {
-          if (event.data === '[DONE]') {
-            setMessageState((state) => ({
-              history: [...state.history, [question, state.pending ?? '']],
-              messages: [
-                ...state.messages,
-                {
-                  type: 'apiMessage',
-                  message: state.pending ?? '',
-                },
-              ],
-              pending: undefined,
-            }));
-            setLoading(false);
-            ctrl.abort();
-          } else {
-            const data = JSON.parse(event.data);
-            setMessageState((state) => ({
-              ...state,
-              pending: (state.pending ?? '') + data.data,
-            }));
-          }
-        },
       });
+      const data = await response.json();
+      console.log('data', data);
+
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setMessageState((state) => ({
+          ...state,
+          messages: [
+            ...state.messages,
+            {
+              type: 'apiMessage',
+              message: data.text,
+              sourceDocs: data.sourceDocuments,
+            },
+          ],
+          history: [...state.history, [question, data.text]],
+        }));
+      }
+      console.log('messageState', messageState);
+
+      setLoading(false);
+
+      //scroll to bottom
+      messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
     } catch (error) {
       setLoading(false);
+      setError('An error occurred while fetching the data. Please try again.');
       console.log('error', error);
     }
   }
@@ -147,19 +146,12 @@ export default function Chatbot({ user }: { user: User }) {
     }
   };
 
-  const chatMessages = useMemo(() => {
-    return [
-      ...messages,
-      ...(pending ? [{ type: 'apiMessage', message: pending }] : []),
-    ];
-  }, [messages, pending]);
-
-  // auto-scroll to bottom of messages list
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest"});
-  };
-  useEffect(scrollToBottom, [chatMessages]);
+  // // auto-scroll to bottom of messages list
+  // const messagesEndRef = useRef<HTMLDivElement>(null);
+  // const scrollToBottom = () => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest"});
+  // };
+  // useEffect(scrollToBottom, [chatMessages]);
 
   return (
     <section className="bg-white mb-8">
@@ -178,7 +170,7 @@ export default function Chatbot({ user }: { user: User }) {
         <main className={styles.main}>
           <div className={styles.cloud}>
             <div ref={messageListRef} className={styles.messagelist}>
-              {chatMessages.map((message, index) => {
+              {messages.map((message, index) => {
                 let icon;
                 let className;
                 if (message.type === 'apiMessage') {
@@ -206,12 +198,12 @@ export default function Chatbot({ user }: { user: User }) {
                   );
                   // The latest message sent by the user will be animated while waiting for a response
                   className =
-                    loading && index === chatMessages.length - 1
+                    loading && index === messages.length - 1
                       ? styles.usermessagewaiting
                       : styles.usermessage;
                 }
                 return (
-                  <div key={index} className={className} ref={messagesEndRef}>
+                  <div key={`chatMessage-${index}`} className={className}>
                     {icon}
                     <div className={styles.markdownanswer}>
                       <ReactMarkdown linkTarget="_blank">

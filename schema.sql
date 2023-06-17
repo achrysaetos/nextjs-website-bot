@@ -4,6 +4,7 @@
 */
 create table users (
   -- UUID from auth.users
+  idx bigserial primary key, -- ADDED TO CREATE TABLES FOR EACH USER
   id uuid references auth.users not null primary key,
   full_name text,
   avatar_url text,

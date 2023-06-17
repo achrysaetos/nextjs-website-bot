@@ -1,53 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
-import { SupabaseVectorStore } from 'langchain/vectorstores';
+import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
 import { supabase } from '@/utils/supabase-client';
 
-import { OpenAI } from 'langchain/llms';
-import { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';
-import { PromptTemplate } from 'langchain/prompts';
+import { OpenAI } from 'langchain/llms/openai';
+import { ConversationalRetrievalQAChain } from 'langchain/chains';
 
-const CONDENSE_PROMPT =
-  PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
+const CONDENSE_PROMPT = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
 Chat History:
 {chat_history}
 Follow Up Input: {question}
-Standalone question:`);
+Standalone question:`;
 
 export const makeChain = (
   apiKey: string,
   prompt: string,
   model: string,
   vectorstore: SupabaseVectorStore,
-  onTokenStream?: (token: string) => void,
 ) => {
-  const QA_PROMPT = PromptTemplate.fromTemplate(prompt);
-  const questionGenerator = new LLMChain({
-    llm: new OpenAI({ 
-      temperature: 0, 
-      openAIApiKey: apiKey
-    }),
-    prompt: CONDENSE_PROMPT,
+  const QA_PROMPT = prompt;
+  const gptmodel = new OpenAI({
+    temperature: 0,
+    modelName: model,
+    openAIApiKey: apiKey
   });
-  const docChain = loadQAChain(
-    new OpenAI({
-      temperature: 0,
-      modelName: model, // default is text-davinci-003 (expensive but better)
-      streaming: Boolean(onTokenStream),
-      callbackManager: {
-        handleNewToken: onTokenStream,
-      },
-      openAIApiKey: apiKey
-    }),
-    { prompt: QA_PROMPT },
-  );
 
-  return new ChatVectorDBQAChain({
-    vectorstore,
-    combineDocumentsChain: docChain,
-    questionGeneratorChain: questionGenerator,
-  });
+  const chain = ConversationalRetrievalQAChain.fromLLM(
+    gptmodel,
+    vectorstore.asRetriever(),
+    {
+      qaTemplate: QA_PROMPT,
+      questionGeneratorTemplate: CONDENSE_PROMPT,
+      returnSourceDocuments: false,
+    },
+  );
+  return chain;
 };
 
 export default async function handler(
@@ -56,47 +44,38 @@ export default async function handler(
 ) {
   const { question, history, apiKey, prompt, model } = req.body;
 
+  //only accept post requests
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
   if (!question) {
     return res.status(400).json({ message: 'No question in the request' });
   }
+
   // OpenAI recommends replacing newlines with spaces for best results
   const sanitizedQuestion = question.trim().replaceAll('\n', ' ');
 
-  /* create vectorstore*/
-  const vectorStore = await SupabaseVectorStore.fromExistingIndex(
-    supabase,
-    new OpenAIEmbeddings({openAIApiKey: apiKey}),
-  );
-
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache, no-transform',
-    Connection: 'keep-alive',
-  });
-
-  const sendData = (data: string) => {
-    res.write(`data: ${data}\n\n`);
-  };
-
-  sendData(JSON.stringify({ data: '' }));
-
-  // create the chain
-  const chain = makeChain(apiKey, prompt, model, vectorStore, (token: string) => {
-    sendData(JSON.stringify({ data: token }));
-  });
-
   try {
-    //Ask a question
+    const vectorStore = await SupabaseVectorStore.fromExistingIndex(
+    new OpenAIEmbeddings({openAIApiKey: apiKey}), {
+      client: supabase,
+      tableName: "documents1",
+      queryName: "match_documents1",
+    });
+
+    const chain = makeChain(apiKey, prompt, model, vectorStore);
+
     const response = await chain.call({
       question: sanitizedQuestion,
       chat_history: history || [],
     });
 
     console.log('response', response);
-  } catch (error) {
+    res.status(200).json(response);
+  } catch (error: any) {
     console.log('error', error);
-  } finally {
-    sendData('[DONE]');
-    res.end();
+    res.status(500).json({ error: error.message || 'Something went wrong' });
   }
 }

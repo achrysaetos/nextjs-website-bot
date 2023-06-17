@@ -23,13 +23,17 @@ async function embedDocuments(
   docs: Document[],
   embeddings: Embeddings,
 ) {
-  await SupabaseVectorStore.fromDocuments(client, docs, embeddings);
+  await SupabaseVectorStore.fromDocuments(docs, embeddings, {
+    client,
+    tableName: "documents1",
+    queryName: "match_documents1",
+  });
   console.log('storing in supabase... done!');
 }
 
 async function splitDocsIntoChunks(docs: Document[]): Promise<Document[]> {
   const textSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 2000,
+    chunkSize: 1000,
     chunkOverlap: 200,
   });
   return await textSplitter.splitDocuments(docs);
