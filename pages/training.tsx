@@ -6,10 +6,10 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { PickerOverlay } from 'filestack-react';
-import { AbsoluteCenter, Box, Checkbox, Divider, useToast } from '@chakra-ui/react';
+import { AbsoluteCenter, Box, Checkbox, Divider, Tooltip, useToast } from '@chakra-ui/react';
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { ArrowTopRightOnSquareIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 import { SaveContext } from '@/utils/context';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -217,6 +217,13 @@ export default function Training({ user }: { user: User }) {
             Upload Files
           </a>
         </div>
+        <Tooltip 
+          label={trainNew ? "Unselect this to continue training your old bot" : "Select this to train a new bot on current data"}
+          placement='bottom-end'
+          bg='teal'
+          w={48}
+          mt={3}
+        >
         <div className="flex items-center justify-between">
           <span 
             className='text-sm font-semibold mr-2 cursor-pointer text-teal-700 select-none'
@@ -226,6 +233,7 @@ export default function Training({ user }: { user: User }) {
           </span>
           <Checkbox isChecked={trainNew} colorScheme='teal' marginRight='4'/>
         </div>
+        </Tooltip>
       </div>
       
       <form onSubmit={handleSubmit}>
@@ -322,44 +330,92 @@ export default function Training({ user }: { user: User }) {
         <div className="flex items-center justify-between">
           {tab === 'text' && 
             <div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
-              </p>
-              {scrapedText != '' && 
-                <span 
-                  onClick={() => {setText(''); setScrapedText('')}}
-                  className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
-                >
-                  Click to add new text.
-                </span>
+              {scrapedText === '' ? 
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  Copy and paste text from any source.
+                </p>
+              :
+                <>
+                  <div className="flex items-center">
+                    <p className="mt-3 text-sm leading-6 text-gray-600">
+                      The data from your text upload.
+                    </p>
+                    <Tooltip 
+                      label={"We've formatted everything for you. Feel free to add new sources."}
+                      placement='right-start'
+                      bg='teal'
+                      w={72}
+                    >
+                      <InformationCircleIcon className='mt-3 text-sm leading-6 text-gray-300 inline h-4 w-4 ml-1' />
+                    </Tooltip>
+                  </div>
+                  <span 
+                    onClick={() => {setText(''); setScrapedText('')}}
+                    className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
+                  >
+                    Click to add new text.
+                  </span>
+                </>
               }
             </div>
           }
+
           {tab === 'links' &&
             <div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
-              </p>
-              {scrapedLinks != '' && 
-                <span 
-                  onClick={() => {setLinks(''); setScrapedLinks('')}}
-                  className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
-                >
-                  Click to add new links.
-                </span>
+              {scrapedLinks === '' ? 
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  Upload website urls, one per line.
+                </p>
+              :
+                <>
+                  <div className="flex items-center">
+                    <p className="mt-3 text-sm leading-6 text-gray-600">
+                      The data from your link uploads.
+                    </p>
+                    <Tooltip 
+                      label={"Make sure that your links are on separate lines and can be scraped."}
+                      placement='right-start'
+                      bg='teal'
+                      w={72}
+                    >
+                      <InformationCircleIcon className='mt-3 text-sm leading-6 text-gray-300 inline h-4 w-4 ml-1' />
+                    </Tooltip>
+                  </div>
+                  <span 
+                    onClick={() => {setLinks(''); setScrapedLinks('')}}
+                    className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
+                  >
+                    Click to add new links.
+                  </span>
+                </>
               }
             </div>
           }
+
           {tab === 'files' && (!files ? 
-            <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
+            <p className="mt-3 text-sm leading-6 text-gray-600">
+              Upload any number of pdf files, up to 20mb each.
+            </p>
           :
             scrapedFiles === '' ?
-              <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
+              <p className="mt-3 text-sm leading-6 text-gray-600">
+                Upload any number of pdf files, up to 20mb each.
+              </p>
             :
               <div>
-                <p className="mt-3 text-sm leading-6 text-gray-600">
-                  The data from your file uploads.
-                </p>
+                <div className="flex items-center">
+                  <p className="mt-3 text-sm leading-6 text-gray-600">
+                    The data from your file uploads.
+                  </p>
+                  <Tooltip 
+                    label={"Make sure that the text from your pdf can be highlighted."}
+                    placement='right-start'
+                    bg='teal'
+                    w={72}
+                  >
+                    <InformationCircleIcon className='mt-3 text-sm leading-6 text-gray-300 inline h-4 w-4 ml-1' />
+                  </Tooltip>
+                </div>
                 <span 
                   onClick={() => {setFiles(''); setScrapedFiles('')}}
                   className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
@@ -368,6 +424,7 @@ export default function Training({ user }: { user: User }) {
                 </span>
               </div>
           )}
+          
           <div className="flex items-center justify-end gap-x-6 mt-4">
             <Link href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-teal-700">
               Cancel

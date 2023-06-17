@@ -6,9 +6,10 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
 import { updateUserModel, updateUserPrompt } from '@/utils/supabase-client';
-import { AbsoluteCenter, Box, Divider, useToast } from '@chakra-ui/react';
+import { AbsoluteCenter, Box, Divider, Tooltip, useToast } from '@chakra-ui/react';
 import Link from 'next/link';
 import { SaveContext } from '@/utils/context';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -95,6 +96,12 @@ Helpful answer in markdown:
             Enter Prompt
           </a>
         </div>
+        <Tooltip 
+          label={model === 'gpt-3.5-turbo' ? "Less powerful, but less expensive" : "More powerful, but more expensive."}
+          placement='bottom-end'
+          bg='teal'
+          w={40}
+        >
         <select 
           className="text-sm font-semibold border-none focus:outline-none focus:border-none focus:ring-0 focus:text-teal-700 text-teal-700" 
           value={model}
@@ -107,6 +114,7 @@ Helpful answer in markdown:
             text-davinci-003
           </option>
         </select>
+        </Tooltip>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -130,9 +138,19 @@ Helpful answer in markdown:
 
         <div className="flex items-start justify-between mt-4">
           <div>
-            <p className="text-sm leading-6 text-gray-600">
-              Tell your bot how to act.
-            </p>
+            <div className="flex items-center">
+              <p className="text-sm leading-6 text-gray-600">
+                Tell your bot how to act and respond to questions.
+              </p>
+              <Tooltip 
+                label={"The more specific you are, the better your bot will be."}
+                placement='right-start'
+                bg='teal'
+                w={72}
+              >
+                <InformationCircleIcon className='text-sm leading-6 text-gray-300 inline h-4 w-4 ml-1' />
+              </Tooltip>
+            </div>
             <span 
               onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
               className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
