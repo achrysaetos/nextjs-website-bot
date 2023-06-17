@@ -78,7 +78,7 @@ Helpful answer in markdown:
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Could not save your settings.",
+        description: "Please try again or contact support.",
         status: 'error',
         duration: 3000,
         isClosable: true,

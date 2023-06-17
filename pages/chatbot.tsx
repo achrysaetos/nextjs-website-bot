@@ -8,7 +8,7 @@ import LoadingDots from '@/components/chat/LoadingDots';
 import { GetServerSidePropsContext } from 'next';
 import { createServerSupabaseClient, User} from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@/utils/useUser';
-import { Box, Divider, AbsoluteCenter } from '@chakra-ui/react';
+import { Box, Divider, AbsoluteCenter, useToast } from '@chakra-ui/react';
 import { SaveContext } from '@/utils/context';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -36,6 +36,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 export default function Chatbot({ user }: { user: User }) {
   const { isLoading, subscription, userDetails } = useUser();
   const { user_api, user_prompt, user_model } = useContext(SaveContext);
+  const toast = useToast();
 
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -68,7 +69,14 @@ export default function Chatbot({ user }: { user: User }) {
     e.preventDefault();
 
     if (!query) {
-      alert('Please input a question');
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please enter a query in the message box.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
       return;
     }
 
@@ -112,6 +120,14 @@ export default function Chatbot({ user }: { user: User }) {
 
       if (data.error) {
         setError(data.error);
+        toast({
+          title: 'Error!',
+          position: 'top-right',
+          description: "Check that your API key is correct.",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
       } else {
         setMessageState((state) => ({
           ...state,
@@ -136,6 +152,14 @@ export default function Chatbot({ user }: { user: User }) {
       setLoading(false);
       setError('An error occurred while fetching the data. Please try again.');
       console.log('error', error);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please try again or contact support.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
   }
 

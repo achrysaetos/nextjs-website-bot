@@ -72,10 +72,27 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedText(response.message[0].pageContent)
       setLoading(false);
+      toast({
+        title: 'Trained new bot!',
+        position: 'top-right',
+        description: "All training sessions will now use this bot.",
+        status: 'success',
+        colorScheme: 'teal',
+        duration: 3000,
+        isClosable: true,
+      })
       return response;
     } catch (error) {
       setLoading(false);
-      return alert((error as Error)?.message);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please try again or contact support.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return;
     }
   };
 
@@ -100,10 +117,27 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedLinks(response.message[0].pageContent)
       setLoading(false);
+      toast({
+        title: 'Trained new bot!',
+        position: 'top-right',
+        description: "All training sessions will now use this bot.",
+        status: 'success',
+        colorScheme: 'teal',
+        duration: 3000,
+        isClosable: true,
+      })
       return response;
     } catch (error) {
       setLoading(false);
-      return alert((error as Error)?.message);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Make sure your links work and are on separate lines.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return;
     }
   };
 
@@ -128,10 +162,27 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedFiles(response.message[0].pageContent)
       setLoading(false);
+      toast({
+        title: 'Trained new bot!',
+        position: 'top-right',
+        description: "All training sessions will now use this bot.",
+        status: 'success',
+        colorScheme: 'teal',
+        duration: 3000,
+        isClosable: true,
+      })
       return response;
     } catch (error) {
       setLoading(false);
-      return alert((error as Error)?.message);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please try again or contact support.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return;
     }
   };
 
@@ -157,21 +208,18 @@ export default function Training({ user }: { user: User }) {
       switch (tab) {
         case 'text':
           if (!text) {
-            alert('Please add some text');
             return;
           }
           textEmbed(text);
           break;
         case 'links':
           if (!links) {
-            alert('Please add some links');
             return;
           }
           linksEmbed(links.replace(/[^\S\n]+/g, '').split('\n'));
           break;
         case 'files':
           if (!files) {
-            alert('Please add some files');
             return;
           }
           scrapeAndEmbedFiles(files)
@@ -179,25 +227,8 @@ export default function Training({ user }: { user: User }) {
         default:
           break;
       }
-      toast({
-        title: 'Trained new bot!',
-        position: 'top-right',
-        description: "All training sessions will now use this bot.",
-        status: 'success',
-        colorScheme: 'teal',
-        duration: 3000,
-        isClosable: true,
-      })
     } catch (error) {
       console.log('error', error);
-      toast({
-        title: 'Error!',
-        position: 'top-right',
-        description: "Could not train your bot.",
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      })
     }
   }
 

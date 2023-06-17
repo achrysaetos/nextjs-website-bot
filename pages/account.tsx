@@ -89,7 +89,7 @@ export default function Account({ user }: { user: User }) {
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Please try again.",
+        description: "Please try again or contact support.",
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -105,7 +105,15 @@ export default function Account({ user }: { user: User }) {
       });
       window.location.assign(url);
     } catch (error) {
-      if (error) return alert((error as Error).message);
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Please try again or contact support.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return;
     }
     setLoading(false);
   };
