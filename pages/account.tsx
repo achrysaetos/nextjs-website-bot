@@ -152,11 +152,6 @@ export default function Account({ user }: { user: User }) {
           </li>
           <li>
             <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              Getting Started
-            </Link>
-          </li>
-          <li>
-            <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               Tutorials
             </Link>
           </li>
@@ -173,7 +168,7 @@ export default function Account({ user }: { user: User }) {
         </ul>
 
         <div className="hidden sm:block">
-          <Center height={48} marginY={5}>
+          <Center height={40} marginY={4}>
             <Divider orientation='vertical' />
           </Center>
         </div>
