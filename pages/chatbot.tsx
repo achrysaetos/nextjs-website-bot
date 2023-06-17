@@ -264,11 +264,13 @@ export default function Chatbot({ user }: { user: User }) {
         </main>
       </div>
       
-      <Box position='relative' marginTop='4'>
-        <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-          Powered by ChatGPT. Copyright © 2022 Chatterup.
-        </AbsoluteCenter>
-      </Box>
+      <div className='hidden sm:block'>
+        <Box position='relative' marginTop='4'>
+          <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+            Powered by ChatGPT. Copyright © 2022 Chatterup.
+          </AbsoluteCenter>
+        </Box>
+      </div>
     </section>
   );
 }

@@ -129,21 +129,23 @@ Helpful answer in markdown:
         </div>
 
         <div className="flex items-start justify-between mt-4">
-          <p className="text-sm leading-6 text-gray-600">
-            Tell your bot how to act.
+          <div>
+            <p className="text-sm leading-6 text-gray-600">
+              Tell your bot how to act.
+            </p>
             <span 
               onClick={() => {setModel(defaultModel); setPrompt(defaultPrompt)}}
-              className='cursor-pointer text-teal-700 font-semibold select-none'
+              className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
             >
-              {' '} Click to reset to default.
+              Click to reset to default.
             </span>
-          </p>
+          </div>
           <div className="flex items-center justify-end gap-x-6">
             <Link href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-teal-700">
               Cancel
             </Link>
             {loading ? (
-              <button type="submit" disabled={loading} className="btn btn-primary btn-wide rounded-full">
+              <button type="submit" disabled={loading} className="btn btn-primary md:btn-wide rounded-full">
                 <span className="loading loading-spinner"></span>
                 Saving
               </button>
@@ -159,8 +161,8 @@ Helpful answer in markdown:
                   loading || 
                   prompt === '' ||
                   (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
-                  ? "btn btn-primary btn-wide rounded-full"
-                  : "btn btn-outline text-teal-700 hover:bg-teal-700 btn-wide rounded-full"
+                  ? "btn btn-primary md:btn-wide rounded-full"
+                  : "btn btn-outline text-teal-700 hover:bg-teal-700 md:btn-wide rounded-full"
                 }
               >
                 Save
@@ -170,12 +172,14 @@ Helpful answer in markdown:
         </div>
       </form>
 
-    <Box position='relative' marginTop='4'>
-      <Divider />
-      <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-        Powered by ChatGPT. Copyright © 2022 Chatterup.
-      </AbsoluteCenter>
-    </Box>
+      <div className='hidden sm:block'>
+        <Box position='relative' marginTop='4'>
+          <Divider />
+          <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+            Powered by ChatGPT. Copyright © 2022 Chatterup.
+          </AbsoluteCenter>
+        </Box>
+      </div>
     </div>
     </div>
     </section>

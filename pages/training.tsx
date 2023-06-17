@@ -319,32 +319,36 @@ export default function Training({ user }: { user: User }) {
           }
         </div>
         
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between">
           {tab === 'text' && 
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
+            <div>
+              <p className="mt-3 text-sm leading-6 text-gray-600">
+                {scrapedText === '' ? 'Copy and paste text from any source.' : 'The data from your text upload.'}
+              </p>
               {scrapedText != '' && 
                 <span 
                   onClick={() => {setText(''); setScrapedText('')}}
-                  className='cursor-pointer text-teal-700 font-semibold select-none'
+                  className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
                 >
-                  {' '} Click to add new text.
+                  Click to add new text.
                 </span>
               }
-            </p>
+            </div>
           }
           {tab === 'links' &&
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
+            <div>
+              <p className="mt-3 text-sm leading-6 text-gray-600">
+                {scrapedLinks === '' ? 'Upload website urls, one per line.' : 'The data from your link uploads.'}
+              </p>
               {scrapedLinks != '' && 
                 <span 
                   onClick={() => {setLinks(''); setScrapedLinks('')}}
-                  className='cursor-pointer text-teal-700 font-semibold select-none'
+                  className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
                 >
-                  {' '} Click to add new links.
+                  Click to add new links.
                 </span>
               }
-            </p>
+            </div>
           }
           {tab === 'files' && (!files ? 
             <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
@@ -352,22 +356,24 @@ export default function Training({ user }: { user: User }) {
             scrapedFiles === '' ?
               <p className="mt-3 text-sm leading-6 text-gray-600">Upload any number of pdf files, up to 20mb each.</p>
             :
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                The data from your file uploads.
+              <div>
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  The data from your file uploads.
+                </p>
                 <span 
                   onClick={() => {setFiles(''); setScrapedFiles('')}}
-                  className='cursor-pointer text-teal-700 font-semibold select-none'
+                  className='text-sm leading-6 cursor-pointer text-teal-700 font-semibold select-none'
                 >
-                  {' '} Click to add new files.
+                  Click to add new files.
                 </span>
-              </p>
+              </div>
           )}
           <div className="flex items-center justify-end gap-x-6 mt-4">
             <Link href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-teal-700">
               Cancel
             </Link>
             {loading ? (
-              <button type="submit" disabled={loading} className="btn btn-wide">
+              <button type="submit" disabled={loading} className="btn md:btn-wide">
                 <span className="loading loading-spinner"></span>
                 Training
               </button>
@@ -385,8 +391,8 @@ export default function Training({ user }: { user: User }) {
                   (tab === 'text' && (!text || scrapedText != '')) ||
                   (tab === 'links' && (!links || scrapedLinks!= '')) ||
                   (tab === 'files' && (!files || scrapedFiles!= '')))
-                  ? "btn btn-primary btn-wide rounded-full"
-                  : "btn btn-outline text-teal-700 hover:bg-teal-700 btn-wide rounded-full"
+                  ? "btn btn-primary md:btn-wide rounded-full"
+                  : "btn btn-outline text-teal-700 hover:bg-teal-700 md:btn-wide rounded-full"
                 }
               >
                 Train
@@ -396,12 +402,14 @@ export default function Training({ user }: { user: User }) {
         </div>
       </form>
 
-    <Box position='relative' marginTop='4'>
-      <Divider />
-      <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-        Powered by ChatGPT. Copyright © 2022 Chatterup.
-      </AbsoluteCenter>
-    </Box>
+    <div className='hidden sm:block'>
+      <Box position='relative' marginTop='4'>
+        <Divider />
+        <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+          Powered by ChatGPT. Copyright © 2022 Chatterup.
+        </AbsoluteCenter>
+      </Box>
+    </div>
     </div>
     </div>
     </section>

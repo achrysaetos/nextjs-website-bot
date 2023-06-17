@@ -136,7 +136,7 @@ export default function Account({ user }: { user: User }) {
       <Divider marginY='2' />
 
       <div className="flex flex-col sm:flex-row items-start justify-between">
-        <ul className="mt-4 space-y-1 w-1/4">
+        <ul className="mt-4 space-y-1 w-1/4 hidden sm:block">
           <li>
             <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               Account
@@ -164,9 +164,11 @@ export default function Account({ user }: { user: User }) {
           </li>
         </ul>
 
-        <Center height={48} marginY={5}>
-          <Divider orientation='vertical' />
-        </Center>
+        <div className="hidden sm:block">
+          <Center height={48} marginY={5}>
+            <Divider orientation='vertical' />
+          </Center>
+        </div>
 
         <div className="mt-4 w-3/4">
           <Card
@@ -178,7 +180,7 @@ export default function Account({ user }: { user: User }) {
                   Check your usage statistics on OpenAI.
                 </p>
                 <form action="https://platform.openai.com/account/usage" target="_blank" rel="noopener noreferrer">
-                  <button type="submit" className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 btn-wide rounded-full'>
+                  <button type="submit" className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 md:btn-wide rounded-full'>
                     Open usage statistics
                   </button>
                 </form>
@@ -191,6 +193,7 @@ export default function Account({ user }: { user: User }) {
                   <div className="input-group mt-8 mb-4">
                     <input 
                       type="text" 
+                      spellCheck="false"
                       placeholder="Paste your API key here" 
                       className="input input-bordered w-full focus:ring-0 focus:border-teal-700 focus:outline-none" 
                       value={apikey}
@@ -219,7 +222,7 @@ export default function Account({ user }: { user: User }) {
                 </p>
                 <button
                   type="submit" 
-                  className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 btn-wide rounded-full'
+                  className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 md:btn-wide rounded-full'
                   disabled={loading || !subscription}
                   onClick={redirectToCustomerPortal}
                 >
@@ -243,12 +246,14 @@ export default function Account({ user }: { user: User }) {
         </div>
       </div>
     
-    <Box position='relative' marginTop='4'>
-      <Divider />
-      <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-        Powered by ChatGPT. Copyright © 2022 Chatterup.
-      </AbsoluteCenter>
-    </Box>
+      <div className='hidden sm:block'>
+        <Box position='relative' marginTop='4'>
+          <Divider />
+          <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
+            Powered by ChatGPT. Copyright © 2022 Chatterup.
+          </AbsoluteCenter>
+        </Box>
+      </div>
     </div>
     </div>
     </section>
