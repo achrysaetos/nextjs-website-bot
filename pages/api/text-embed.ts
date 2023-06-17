@@ -4,7 +4,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
 import { SupabaseVectorStore } from 'langchain/vectorstores';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { supabase } from '@/utils/supabase-client';
+import { deleteUserEmbeddings, supabase } from '@/utils/supabase-client';
 
 async function extractDataFromText(content: string): Promise<Document[]> {
   try {
@@ -45,14 +45,15 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const { text, apiKey, user_idx } = req.body;
+    const { text, apiKey, user_idx, cleartbl } = req.body;
     try {
       //load data from each url
       const rawDocs = await extractDataFromText(text);
-      //split docs into chunks for openai context window
-      const docs = await splitDocsIntoChunks(rawDocs);
-      //embed docs into supabase
-      await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}), user_idx);
+      if (cleartbl) deleteUserEmbeddings("documents" + user_idx.toString())
+      // //split docs into chunks for openai context window
+      // const docs = await splitDocsIntoChunks(rawDocs);
+      // //embed docs into supabase
+      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}), user_idx);
       return res.status(200).json({ message: rawDocs });
     } catch (err: any) {
       console.log(err);

@@ -61,3 +61,10 @@ export const updateUserModel = async (user: User, model: string) => {
     })
     .eq('id', user.id);
 };
+
+export const deleteUserEmbeddings = async (tblname: string) => {
+  await supabase
+    .from(tblname)
+    .delete()
+    .neq('id', 0)
+};

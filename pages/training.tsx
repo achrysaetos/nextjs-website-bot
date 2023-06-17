@@ -58,11 +58,12 @@ export default function Training({ user }: { user: User }) {
       const path = '/api/text-embed';
       const apiKey = user_api || userDetails?.user_api;
       const user_idx = userDetails?.idx;
+      const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey, user_idx})
+        body: JSON.stringify({text, apiKey, user_idx, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
@@ -85,11 +86,12 @@ export default function Training({ user }: { user: User }) {
       const path = '/api/links-embed';
       const apiKey = user_api || userDetails?.user_api;
       const user_idx = userDetails?.idx;
+      const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({urls, apiKey, user_idx})
+        body: JSON.stringify({urls, apiKey, user_idx, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, urls, res });
@@ -112,11 +114,12 @@ export default function Training({ user }: { user: User }) {
       const path = '/api/text-embed';
       const apiKey = user_api || userDetails?.user_api;
       const user_idx = userDetails?.idx;
+      const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey, user_idx})
+        body: JSON.stringify({text, apiKey, user_idx, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
@@ -217,7 +220,7 @@ export default function Training({ user }: { user: User }) {
         <div className="flex items-center justify-between">
           <span 
             className='text-sm font-semibold mr-2 cursor-pointer text-teal-700 select-none'
-            onClick={() => {setTrainNew(!trainNew); console.log(trainNew)}} 
+            onClick={() => setTrainNew(!trainNew)} 
           >
             Train new bot
           </span>
