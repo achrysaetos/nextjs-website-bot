@@ -42,7 +42,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { question, history, apiKey, prompt, model } = req.body;
+  const { question, history, apiKey, prompt, model, user_idx } = req.body;
 
   //only accept post requests
   if (req.method !== 'POST') {
@@ -61,8 +61,8 @@ export default async function handler(
     const vectorStore = await SupabaseVectorStore.fromExistingIndex(
     new OpenAIEmbeddings({openAIApiKey: apiKey}), {
       client: supabase,
-      tableName: "documents1",
-      queryName: "match_documents1",
+      tableName: "documents" + user_idx.toString(),
+      queryName: "match_documents" + user_idx.toString(),
     });
 
     const chain = makeChain(apiKey, prompt, model, vectorStore);

@@ -196,7 +196,7 @@ export default function Account({ user }: { user: User }) {
                       value={apikey}
                       onChange={(e) => setApiKey(e.target.value)}
                     />
-                    <button type="submit" disabled={apikey === ''} className="btn btn-square bg-teal-700 ring-teal-700">
+                    <button type="submit" disabled={apikey === ''} className="btn btn-square bg-teal-600 hover:bg-teal-700 ring-teal-700">
                       <PaperAirplaneIcon className={apikey === '' ? "w-5 h-5 text-black" : "w-5 h-5 text-white"} />
                     </button>
                   </div>
@@ -236,7 +236,7 @@ export default function Account({ user }: { user: User }) {
               ) : subscription ? (
                 `${subscriptionPrice}/${subscription?.prices?.interval}`
               ) : (
-                <Link href="/">Choose your plan</Link>
+                <Link href="/public/pricing">Choose your plan</Link>
               )}
             </div>
           </Card>

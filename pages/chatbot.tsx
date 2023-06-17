@@ -92,6 +92,7 @@ export default function Chatbot({ user }: { user: User }) {
       const apiKey = user_api || userDetails?.user_api;
       const prompt = user_prompt || userDetails?.user_prompt;
       const model = user_model || userDetails?.user_model;
+      const user_idx = userDetails?.idx;
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -103,6 +104,7 @@ export default function Chatbot({ user }: { user: User }) {
           apiKey,
           prompt,
           model,
+          user_idx,
         }),
       });
       const data = await response.json();

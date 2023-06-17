@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import {
   createServerSupabaseClient,
@@ -10,6 +10,7 @@ import { AbsoluteCenter, Box, Checkbox, Divider, useToast } from '@chakra-ui/rea
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { SaveContext } from '@/utils/context';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -48,18 +49,20 @@ export default function Training({ user }: { user: User }) {
 
   const toast = useToast();
   const [filePicker, setFilePicker] = useState<boolean>(false);
+  const { user_api } = useContext(SaveContext);
   
   const textEmbed = async (text: string) => {
     setScrapedText('');
     setLoading(true);
     try {
       const path = '/api/text-embed';
-      const apiKey = userDetails?.user_api;
+      const apiKey = user_api || userDetails?.user_api;
+      const user_idx = userDetails?.idx;
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey})
+        body: JSON.stringify({text, apiKey, user_idx})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
@@ -80,12 +83,13 @@ export default function Training({ user }: { user: User }) {
     setLoading(true);
     try {
       const path = '/api/links-embed';
-      const apiKey = userDetails?.user_api;
+      const apiKey = user_api || userDetails?.user_api;
+      const user_idx = userDetails?.idx;
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({urls, apiKey})
+        body: JSON.stringify({urls, apiKey, user_idx})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, urls, res });
@@ -106,12 +110,13 @@ export default function Training({ user }: { user: User }) {
     setLoading(true);
     try {
       const path = '/api/text-embed';
-      const apiKey = userDetails?.user_api;
+      const apiKey = user_api || userDetails?.user_api;
+      const user_idx = userDetails?.idx;
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey})
+        body: JSON.stringify({text, apiKey, user_idx})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });

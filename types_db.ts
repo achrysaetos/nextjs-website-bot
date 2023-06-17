@@ -181,6 +181,7 @@ export interface Database {
           user_api: string | null;
           user_model: string | null;
           id: string;
+          idx: number;
           payment_method: Json | null;
         };
         Insert: {
@@ -191,6 +192,7 @@ export interface Database {
           user_api?: string | null;
           user_model?: string | null;
           id: string;
+          idx: number;
           payment_method?: Json | null;
         };
         Update: {
@@ -201,6 +203,7 @@ export interface Database {
           user_api?: string | null;
           user_model?: string | null;
           id?: string;
+          idx?: number;
           payment_method?: Json | null;
         };
       };

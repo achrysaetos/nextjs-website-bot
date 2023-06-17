@@ -22,11 +22,12 @@ async function embedDocuments(
   client: SupabaseClient,
   docs: Document[],
   embeddings: Embeddings,
+  user_idx: number
 ) {
   await SupabaseVectorStore.fromDocuments(docs, embeddings, {
     client,
-    tableName: "documents1",
-    queryName: "match_documents1",
+    tableName: "documents" + user_idx.toString(),
+    queryName: "match_documents" + user_idx.toString(),
   });
   console.log('storing in supabase... done!');
 }
@@ -44,14 +45,14 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const { text, apiKey } = req.body;
+    const { text, apiKey, user_idx } = req.body;
     try {
       //load data from each url
       const rawDocs = await extractDataFromText(text);
-      // //split docs into chunks for openai context window
-      // const docs = await splitDocsIntoChunks(rawDocs);
-      // //embed docs into supabase
-      // await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}));
+      //split docs into chunks for openai context window
+      const docs = await splitDocsIntoChunks(rawDocs);
+      //embed docs into supabase
+      await embedDocuments(supabase, docs, new OpenAIEmbeddings({openAIApiKey: apiKey}), user_idx);
       return res.status(200).json({ message: rawDocs });
     } catch (err: any) {
       console.log(err);
