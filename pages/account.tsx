@@ -176,11 +176,10 @@ export default function Account({ user }: { user: User }) {
         <div className="mt-4 w-3/4">
           <Card
             title="Your API Key"
-            description="Enter your API key to unlock infinite messages!"
             footer={
               <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
                 <p className="pb-4 sm:pb-0">
-                  Check your usage statistics on OpenAI.
+                  Remember to check your usage statistics on OpenAI.
                 </p>
                 <form action="https://platform.openai.com/account/usage" target="_blank" rel="noopener noreferrer">
                   <button type="submit" className='btn btn-outline text-teal-700 bg-white hover:bg-teal-700 md:btn-wide rounded-full'>
@@ -190,6 +189,18 @@ export default function Account({ user }: { user: User }) {
               </div>
             }
           >
+            <div className='text-zinc-600'>
+              Enter your API key to unlock infinite messages! Get your key 
+              <Link href="https://platform.openai.com/account/api-keys" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                {" "} here.
+              </Link>
+            </div>
+            <div className='text-zinc-600'>
+              Need more help?
+              <Link href="https://platform.openai.com/account/api-keys" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                {" "} Show me how to get my key.
+              </Link>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="w-full">
                 <div className="form-control">
@@ -221,7 +232,7 @@ export default function Account({ user }: { user: User }) {
             footer={
               <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
                 <p className="pb-4 sm:pb-0">
-                  Manage your subscription on Stripe.
+                  For secure billing, manage your subscription on Stripe.
                 </p>
                 <button
                   type="submit" 
@@ -234,6 +245,18 @@ export default function Account({ user }: { user: User }) {
               </div>
             }
           >
+            <div className='text-zinc-600'>
+              This is your current plan. See our pricing
+              <Link href="/public/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                {" "} here.
+              </Link>
+            </div>
+            <div className='text-zinc-600'>
+              You will be billed according to your plan and OpenAI's
+              <Link href="https://openai.com/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                {" "} usage rates.
+              </Link>
+            </div>
             <div className="text-xl mt-8 mb-4 font-semibold">
               {isLoading ? (
                 <div className="h-12 mb-6">

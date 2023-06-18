@@ -36,6 +36,7 @@
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.5",
     "react-merge-refs": "^2.0.1",
+    "react-player": "^2.12.0",
     "stripe": "^11.13.0",
     "swr": "^2.0.4",
     "tailwind-merge": "^1.10.0",

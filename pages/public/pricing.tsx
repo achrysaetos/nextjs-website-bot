@@ -12,6 +12,7 @@ import { useUser } from '@/utils/useUser';
 import { Price, ProductWithPrice } from 'types';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import Footer from '@/components/ui/Footer/Footer';
+import Link from 'next/link';
 
 interface Props {
   products: ProductWithPrice[];
@@ -100,6 +101,14 @@ export default function Pricing({ products }: Props) {
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Pricing that's tailored for your needs. Use your official ChatGPT key from OpenAI to unlock powerful options at low rates.
+              <span>
+                {' '} See usage rates 
+                <span>
+                  <Link href="https://openai.com/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                    {' '} here.
+                  </Link>
+                </span>
+              </span>
             </p>
             <div className="relative self-center mt-6 bg-zinc-100 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-100">
               <button
@@ -144,9 +153,6 @@ export default function Pricing({ products }: Props) {
                     <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                       {product.name}
                     </h3>
-                    <p className="mt-6 text-base leading-7 text-gray-600">
-                      Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.
-                    </p>
                     <p className="mt-6 text-base leading-7 text-gray-600">
                       {product.description}
                     </p>

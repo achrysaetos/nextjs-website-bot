@@ -2,69 +2,41 @@ import Link from "next/link";
 import Footer from '@/components/ui/Footer';
 
 const links = [
-  { name: 'Open roles', href: '#' },
-  { name: 'Internship program', href: '#' },
-  { name: 'Our values', href: '#' },
-  { name: 'Meet our leadership', href: '#' },
-]
-const stats = [
-  { name: 'Offices worldwide', value: '12' },
-  { name: 'Full-time colleagues', value: '300+' },
-  { name: 'Hours per week', value: '40' },
-  { name: 'Paid time off', value: 'Unlimited' },
+  { name: 'Set up my API key', href: '#' },
+  { name: 'Train my first bot', href: '#' },
+  { name: 'Define the behavior', href: '#' },
 ]
 
 const posts = [
   {
     id: 1,
-    title: 'Boost your conversion rate',
+    title: 'How do I set up my API key?',
     href: '#',
     description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+      "This is the first (and only) step you need to start sending messages to your bot. With the official key from OpenAI, you'll have unlimited access to ChatGPT's most powerful models at extremely low rates.",
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
+    category: { title: 'Getting started', href: '#' },
   },
   {
     id: 2,
-    title: 'Boost your conversion rate',
+    title: 'How do I train my first bot?',
     href: '#',
     description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+      'You can upload custom data to teach your bot to become the perfect AI assistant. You can upload any pdf file, any website url, or copy and paste any text. For example, you can upload a book, scrape Wikipedia, and so on.',
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
+    category: { title: 'Getting started', href: '#' },
   },
   {
     id: 3,
-    title: 'Boost your conversion rate',
+    title: 'How do I define the behavior of my bot?',
     href: '#',
     description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+      "Once you finish training your bot, you can define its default behavior. For example, you might give it personality traits and instructions on how to answer questions (ie. reply like you're Hermione).",
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
+    category: { title: 'Getting started', href: '#' },
   },
 ]
 
@@ -117,14 +89,6 @@ export default function Support() {
                 </Link>
               ))}
             </div>
-            <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.name} className="flex flex-col-reverse">
-                  <dt className="text-base leading-7 text-gray-300">{stat.name}</dt>
-                  <dd className="text-2xl font-bold leading-9 tracking-tight text-white">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
       </div>
@@ -135,7 +99,7 @@ export default function Support() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-              Learn how to grow your business with our expert advice.
+              Learn how to use your new custom bot with these tutorials.
             </p>
           </div>
           <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -157,18 +121,6 @@ export default function Support() {
                     </Link>
                   </h3>
                   <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
-                </div>
-                <div className="relative mt-8 flex items-center gap-x-4">
-                  <img src={post.author.imageUrl} alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-                  <div className="text-sm leading-6">
-                    <p className="font-semibold text-gray-900">
-                      <Link href={post.author.href}>
-                        <span className="absolute inset-0" />
-                        {post.author.name}
-                      </Link>
-                    </p>
-                    <p className="text-gray-600">{post.author.role}</p>
-                  </div>
                 </div>
               </article>
             ))}
