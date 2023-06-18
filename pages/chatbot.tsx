@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect, useMemo, useContext } from 'react';
 import styles from '@/styles/chatbot.module.css';
 import { Message } from '@/types/chat';
-import { fetchEventSource } from '@microsoft/fetch-event-source';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/chat/LoadingDots';
@@ -62,7 +61,7 @@ export default function Chatbot({ user }: { user: User }) {
 
   useEffect(() => {
     textAreaRef.current?.focus();
-  }, []);
+  }, [loading]);
 
   //handle form submission
   async function handleSubmit(e: any) {
@@ -143,11 +142,7 @@ export default function Chatbot({ user }: { user: User }) {
         }));
       }
       console.log('messageState', messageState);
-
       setLoading(false);
-
-      //scroll to bottom
-      messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
     } catch (error) {
       setLoading(false);
       setError('An error occurred while fetching the data. Please try again.');
@@ -172,12 +167,12 @@ export default function Chatbot({ user }: { user: User }) {
     }
   };
 
-  // // auto-scroll to bottom of messages list
-  // const messagesEndRef = useRef<HTMLDivElement>(null);
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest"});
-  // };
-  // useEffect(scrollToBottom, [chatMessages]);
+  // auto-scroll to bottom of messages list
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest"});
+  };
+  useEffect(scrollToBottom, [messages]);
 
   return (
     <section className="bg-white mb-8">
@@ -229,7 +224,7 @@ export default function Chatbot({ user }: { user: User }) {
                       : styles.usermessage;
                 }
                 return (
-                  <div key={`chatMessage-${index}`} className={className}>
+                  <div key={`chatMessage-${index}`} className={className} ref={messagesEndRef}>
                     {icon}
                     <div className={styles.markdownanswer}>
                       <ReactMarkdown linkTarget="_blank">
@@ -248,7 +243,7 @@ export default function Chatbot({ user }: { user: User }) {
                   disabled={loading}
                   onKeyDown={handleEnter}
                   ref={textAreaRef}
-                  autoFocus={false}
+                  autoFocus={true}
                   rows={1}
                   maxLength={512}
                   id="userInput"

@@ -187,8 +187,8 @@ export default function Training({ user }: { user: User }) {
   };
 
   const scrapeAndEmbedFiles = async (files: any) => {
-    const pdfjs = await import('pdfjs-dist/build/pdf');
-    const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
+    const pdfjs = await require('pdfjs-dist/build/pdf');
+    const pdfjsWorker = await require('pdfjs-dist/build/pdf.worker.entry');
     let fullText = '';
     for (const file of files) {
       let doc = await pdfjs.getDocument(file.url).promise;
