@@ -26,9 +26,6 @@ const Navbar = () => {
             <nav className="space-x-2 ml-6 hidden md:block">
               {!user ? (
                 <>
-                  <Link href="/public/product" className={s.link}>
-                    Product
-                  </Link>
                   <Link href="/public/features" className={s.link}>
                     Features
                   </Link>
@@ -36,7 +33,10 @@ const Navbar = () => {
                     Pricing
                   </Link>
                   <Link href="/public/faq" className={s.link}>
-                    FAQs
+                    FAQ
+                  </Link>
+                  <Link href="/public/support" className={s.link}>
+                    Support
                   </Link>
                 </>
               ) : (

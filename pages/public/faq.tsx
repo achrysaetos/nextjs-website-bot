@@ -3,33 +3,33 @@ import Footer from '@/components/ui/Footer';
 
 const questions = [
   {
-    q: 'Push to deploy?',
-    a: 'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
+    q: 'What is Chatterup?',
+    a: "Chatterup is a ChatGPT bot that you can teach to become anything. Since you're customizing it with your own data, you can make it your own expert AI assistant.",
     icon: CloudArrowUpIcon,
   },
   {
-    q: 'SSL certificates?',
-    a: 'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
+    q: 'Can I customize my chatbot?',
+    a: "Yes, you can define the default behavior of your bot and give it personality traits and instructions on how to answer questions (ie. reply like you're Hermione).",
     icon: LockClosedIcon,
   },
   {
-    q: 'Simple queues?',
-    a: 'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
+    q: 'What kind of data can I upload?',
+    a: 'You can upload any pdf file, any website url, or copy and paste any text. For example, you can upload a book, scrape Wikipedia, and so on.',
     icon: ArrowPathIcon,
   },
   {
-    q: 'Advanced security?',
-    a: 'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
+    q: 'Do I get unlimited bots and messages?',
+    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages, with no hidden fees.',
+    icon: ArrowPathIcon,
+  },
+  {
+    q: 'What ChatGPT model is available?',
+    a: 'You have access to either gpt-3.5-turbo or text-davinci-003. The latter is more powerful, while the former is more cost effective.',
     icon: FingerPrintIcon,
   },
   {
-    q: 'What else?',
-    a: 'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
-    icon: ArrowPathIcon,
-  },
-  {
-    q: 'And more?',
-    a: 'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
+    q: 'How do I get support or request features?',
+    a: 'You can email us at support@chatterup.co for any support or feature requests. We are always happy to help!',
     icon: FingerPrintIcon,
   },
 ]
@@ -40,13 +40,12 @@ export default function FAQ() {
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
+            <h2 className="text-base font-semibold leading-7 text-indigo-600">How can we help?</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Frequently Asked Questions
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
-              pulvinar et feugiat blandit at. In mi viverra elit nunc.
+              If you can't find your question, email us at support@chatterup.co and we'll get back to you as soon as possible.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">

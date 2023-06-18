@@ -4,41 +4,41 @@ import Footer from "@/components/ui/Footer/Footer";
 
 const features_section1 = [
   {
-    name: "Push to deploy.",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque.",
+    name: "Unlimited chatbots.",
+    description: "Create a new bot for every occasion. Teach it to invest like Warren Buffet, or to write like Shakespeare.",
     icon: CloudArrowUpIcon,
   },
   {
-    name: "SSL certificates.",
-    description: "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.",
+    name: "Unlimited messages.",
+    description: "Unlock an infinite number of messages with your official ChatGPT key from OpenAI. No more limits, ever.",
     icon: LockClosedIcon,
   },
   {
-    name: "Database backups.",
-    description: "Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.",
+    name: "Unlimited potential.",
+    description: "Utilize state-of-the-art GPT models. Train your bot to become an expert in any field, then use it to help you.",
     icon: ServerIcon,
   },
 ];
 
 const features_section2 = [
   {
-    name: "Push to deploy",
-    description: "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
+    name: "For individuals",
+    description: "Make ChatGPT your customized AI assistant. Need a conversation with a seasoned investor, a self-help coach, or a professional chef? They're all here for you.",
     icon: CloudArrowUpIcon,
   },
   {
-    name: "SSL certificates",
-    description: "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
+    name: "For creators",
+    description: "Let ChatGPT inspire you. Train it on your manuscript, then ask: what might go next? Teach it to become an expert, or to write in the style of your favorite author.",
     icon: LockClosedIcon,
   },
   {
-    name: "Simple queues",
-    description: "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
+    name: "For businesses",
+    description: "Let ChatGPT analyze your data, then ask it to help you with your day-to-day operations. Need a chatbot for your website? An advisor for you or your employees? Done.",
     icon: ArrowPathIcon,
   },
   {
-    name: "Advanced security",
-    description: "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
+    name: "For students",
+    description: "Don't want to read 200 pages tonight? Let ChatGPT summarize it. Need to write a history paper using textbook sources? Sure, ChatGPT can do that, too.",
     icon: FingerPrintIcon,
   },
 ];
@@ -49,7 +49,7 @@ export default function Landing() {
       {/* Hero Section -------------------------------------------------------------------------------------------------------------- */}
       <section>
         <div className="bg-white">
-          <div className="relative isolate px-6 pt-14 lg:px-8">
+          <div className="relative isolate px-6 lg:px-8">
             <div
               className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
               aria-hidden="true"
@@ -65,21 +65,19 @@ export default function Landing() {
             <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  Announcing our next round of funding.{" "}
-                  <Link href="/public/product" className="font-semibold text-indigo-600">
+                  Announcing an UNLIMITED 1-day free trial.{" "}
+                  <Link href="/public/pricing" className="font-semibold text-indigo-600">
                       <span className="absolute inset-0" aria-hidden="true" />
-                      Read more <span aria-hidden="true">&rarr;</span>
+                      Get started <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
               </div>
               <div className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                  Data to enrich your online business
+                  Customize ChatGPT for your use case
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-                  lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-                  fugiat aliqua.
+                  What if you could teach ChatGPT anything? Train it to harness the knowlege of Warren Buffet, or chat with you as Hermione Granger? Now you can.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <Link href="/public/pricing" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -115,15 +113,13 @@ export default function Landing() {
               <div className="lg:pr-8 lg:pt-4">
                 <div className="lg:max-w-lg">
                   <h2 className="text-base font-semibold leading-7 text-indigo-600">
-                    Deploy faster
+                    Personal AI assistant
                   </h2>
                   <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                    A better workflow
+                    Trained on your data
                   </p>
                   <p className="mt-6 text-lg leading-8 text-gray-600">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Maiores impedit perferendis suscipit eaque, iste dolor
-                    cupiditate blanditiis ratione.
+                    Teach ChatGPT anything. Let it read articles, books, essays, papers, reports, and manuscripts. Then ask it anything. Summarize a book? Advise you on a topic? Write a document? Your custom AI expert can do it all.
                   </p>
                   <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                     {features_section1.map((feature) => (
@@ -159,15 +155,13 @@ export default function Landing() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
               <h2 className="text-base font-semibold leading-7 text-indigo-600">
-                Deploy faster
+                A bot for every use case
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Everything you need to deploy your app
+                Everything you need for pure efficiency
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
-                Suspendisse eget egestas a elementum pulvinar et feugiat blandit
-                at. In mi viverra elit nunc.
+                Train ChatGPT with all the knowledge you need it to have, then customize it to act exactly as you want. Endless possibilities, unlocked.
               </p>
             </div>
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -214,16 +208,16 @@ export default function Landing() {
               </svg>
               <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Boost your productivity.
+                  Pay only for what you use.
                   <br />
-                  Start using our app today.
+                  No more.
                 </h2>
                 <p className="mt-6 text-lg leading-8 text-gray-300">
-                  Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
+                  Introducing a new pricing system tailored for your needs. Unlimited messages and chatbots with your official ChatGPT key from OpenAI.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                   <Link href="/public/pricing" className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                      Get started
+                      1-day free trial
                   </Link>
                   <Link href="/public/features" className="text-sm font-semibold leading-6 text-white">
                       Learn more <span aria-hidden="true">→</span>
