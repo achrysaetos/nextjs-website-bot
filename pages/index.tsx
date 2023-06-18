@@ -1,4 +1,4 @@
-import Landing from '@/pages/landing';
+import Landing from '@/pages/public/landing';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { GetServerSidePropsContext } from 'next';
 
