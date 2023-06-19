@@ -12,7 +12,7 @@ import { useUser } from '@/utils/useUser';
 import { postData } from '@/utils/helpers';
 import { updateUserApi } from '@/utils/supabase-client';
 import { Box, Divider, AbsoluteCenter, Center, useToast } from '@chakra-ui/react';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { SaveContext } from '@/utils/context';
 
 interface Props {
@@ -137,7 +137,7 @@ export default function Account({ user }: { user: User }) {
           </a>
         </div>
         <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-          Badge
+          Unlimited
         </span>
       </div>
 
@@ -257,7 +257,7 @@ export default function Account({ user }: { user: User }) {
                 {" "} usage rates.
               </Link>
             </div>
-            <div className="text-xl mt-8 mb-4 font-semibold">
+            <div className="text-xl mt-8 mb-4">
               {isLoading ? (
                 <div className="h-12 mb-6">
                   <LoadingDots />
@@ -265,7 +265,11 @@ export default function Account({ user }: { user: User }) {
               ) : subscription ? (
                 `${subscriptionPrice}/${subscription?.prices?.interval}`
               ) : (
-                <Link href="/public/pricing">Choose your plan</Link>
+                <Link href="/public/pricing" className='text-teal-700'>
+                  <ChevronDoubleLeftIcon className='text-xl font-bold leading-6 text-teal-700 inline h-4 w-4 mr-1 mb-1'/>
+                  See available plans 
+                  <ChevronDoubleRightIcon className='text-xl font-bold leading-6 text-teal-700 inline h-4 w-4 ml-1 mb-1'/>
+                </Link>
               )}
             </div>
           </Card>

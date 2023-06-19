@@ -110,8 +110,8 @@ export default function Landing() {
 
       {/* Video Section -------------------------------------------------------------------------------------------------------------- */}
       <section>
-        <div className="flex flex-col items-center justify-center m-auto lg:w-3/5">
-          <ReactPlayer url='videos/demo.mp4' controls loop playing muted width="full" height="full"/>
+        <div className="flex flex-col items-center justify-center m-auto lg:w-3/5 border border-gray-200 rounded-lg shadow">
+          <ReactPlayer url='videos/demo.mp4' controls loop playing muted playbackRate={1.5} width="full" height="full"/>
         </div>
       </section>
 

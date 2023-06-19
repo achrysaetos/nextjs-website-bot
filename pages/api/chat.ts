@@ -21,7 +21,7 @@ export const makeChain = (
 ) => {
   const QA_PROMPT = prompt;
   const gptmodel = new OpenAI({
-    temperature: 0,
+    temperature: 0.5,
     modelName: model,
     openAIApiKey: apiKey
   });
