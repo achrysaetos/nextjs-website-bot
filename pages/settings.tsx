@@ -170,15 +170,8 @@ Helpful answer in markdown:
             ) : (
               <button 
                 type="submit" 
-                disabled={
-                  loading || 
-                  prompt === '' ||
-                  (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
-                }
-                className={
-                  loading || 
-                  prompt === '' ||
-                  (prompt === userDetails?.user_prompt && model === userDetails?.user_model)
+                disabled={loading || prompt === ''}
+                className={loading || prompt === ''
                   ? "btn btn-primary md:btn-wide rounded-full"
                   : "btn btn-outline text-teal-700 hover:bg-teal-700 md:btn-wide rounded-full"
                 }

@@ -29,9 +29,9 @@ const SignIn = () => {
           <div className="flex flex-col space-y-4">
             <Auth
               supabaseClient={supabaseClient}
-              providers={['github']}
+              providers={[]}
               redirectTo={getURL()}
-              magicLink={true}
+              magicLink={false}
               appearance={{
                 theme: ThemeSupa,
                 variables: {

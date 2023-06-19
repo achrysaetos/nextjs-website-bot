@@ -15,8 +15,8 @@ export default function Layout({ children, meta: pageMeta }: Props) {
   const { isLoading, subscription, userDetails } = useUser();
   const router = useRouter();
   const meta = {
-    title: 'Next.js Subscription Starter',
-    description: 'Brought to you by Vercel, Stripe, and Supabase.',
+    title: 'Chatterup | Customize ChatGPT for your use case',
+    description: 'Brought to you by Vercel, Stripe, Supabase, and OpenAI.',
     cardImage: '/og.png',
     ...pageMeta
   };
