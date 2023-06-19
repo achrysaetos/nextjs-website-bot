@@ -148,9 +148,9 @@ export default function Landing() {
                 </div>
               </div>
               <img
-                src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+                src="images/landing1.png"
                 alt="Product screenshot"
-                className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+                className="mt-6 w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
                 width={2432}
                 height={1442}
               />
@@ -236,8 +236,8 @@ export default function Landing() {
               </div>
               <div className="relative mt-16 h-80 lg:mt-8">
                 <img
-                  className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-                  src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+                  className="absolute left-0 top-8 w-[57rem] max-w-none rounded-lg bg-white/5 ring-1 ring-white/10"
+                  src="images/landing2.png"
                   alt="App screenshot"
                   width={1824}
                   height={1080}

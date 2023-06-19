@@ -146,25 +146,25 @@ export default function Account({ user }: { user: User }) {
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <ul className="mt-4 space-y-1 w-1/4 hidden sm:block">
           <li>
-            <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+            <Link href="/account" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               Account
             </Link>
           </li>
           <li>
-            <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              Tutorials
-            </Link>
-          </li>
-          <li>
-            <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+            <Link href="/public/support" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               Support
             </Link>
           </li>
           <li>
+            <Link href="/public/faq" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              FAQs
+            </Link>
+          </li>
+          {/* <li>
             <Link href="" className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               Enterprise
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         <div className="hidden sm:block">
