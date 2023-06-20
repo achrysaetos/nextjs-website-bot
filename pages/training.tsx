@@ -74,15 +74,26 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedText(response.message[0].pageContent)
       setLoading(false);
-      toast({
-        title: 'Trained new bot!',
-        position: 'top-right',
-        description: "All training sessions will now use this bot.",
-        status: 'success',
-        colorScheme: 'teal',
-        duration: 3000,
-        isClosable: true,
-      })
+      if (trainNew)
+        toast({
+          title: 'Trained new bot!',
+          position: 'top-right',
+          description: "All sessions will now use this bot.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
+      else 
+        toast({
+          title: 'Trained old bot.',
+          position: 'top-right',
+          description: "Your bot's knowledge has been updated.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
       return response;
     } catch (error) {
       setLoading(false);
@@ -119,15 +130,26 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedLinks(response.message[0].pageContent)
       setLoading(false);
-      toast({
-        title: 'Trained new bot!',
-        position: 'top-right',
-        description: "All training sessions will now use this bot.",
-        status: 'success',
-        colorScheme: 'teal',
-        duration: 3000,
-        isClosable: true,
-      })
+      if (trainNew)
+        toast({
+          title: 'Trained new bot!',
+          position: 'top-right',
+          description: "All sessions will now use this bot.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
+      else 
+        toast({
+          title: 'Trained old bot.',
+          position: 'top-right',
+          description: "Your bot's knowledge has been updated.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
       return response;
     } catch (error) {
       setLoading(false);
@@ -164,15 +186,26 @@ export default function Training({ user }: { user: User }) {
       const response = await res.json();
       setScrapedFiles(response.message[0].pageContent)
       setLoading(false);
-      toast({
-        title: 'Trained new bot!',
-        position: 'top-right',
-        description: "All training sessions will now use this bot.",
-        status: 'success',
-        colorScheme: 'teal',
-        duration: 3000,
-        isClosable: true,
-      })
+      if (trainNew)
+        toast({
+          title: 'Trained new bot!',
+          position: 'top-right',
+          description: "All sessions will now use this bot.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
+      else 
+        toast({
+          title: 'Trained old bot.',
+          position: 'top-right',
+          description: "Your bot's knowledge has been updated.",
+          status: 'success',
+          colorScheme: 'teal',
+          duration: 3000,
+          isClosable: true,
+        })
       return response;
     } catch (error) {
       setLoading(false);

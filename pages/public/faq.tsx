@@ -19,7 +19,7 @@ const questions = [
   },
   {
     q: 'Do I get unlimited bots and messages?',
-    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages when you sign up with either the Standard and Pro plans.',
+    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages when you sign up for either the Standard and Pro plans.',
     icon: ArrowPathIcon,
   },
   {

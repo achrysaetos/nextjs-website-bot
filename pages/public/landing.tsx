@@ -31,12 +31,12 @@ const features_section2 = [
   },
   {
     name: "For creators",
-    description: "Let ChatGPT inspire you. Train it on a famous novel, then ask: what might go next? Teach it to become an expert, or to write in the style of your favorite author.",
+    description: "Let ChatGPT inspire you. Give it a famous novel to read, then ask: what might go next? Teach it to become an expert, or to write in the style of your favorite author.",
     icon: LockClosedIcon,
   },
   {
     name: "For businesses",
-    description: "Let ChatGPT analyze your data, then ask it to help you with your day-to-day operations. Need a chatbot for your website? An advisor for you or your employees? Done.",
+    description: "Let ChatGPT analyze market data, then ask it to help you with your day-to-day operations. Need a chatbot for your website? An advisor for you or your employees? Done.",
     icon: ArrowPathIcon,
   },
   {
