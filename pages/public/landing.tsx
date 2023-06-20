@@ -31,7 +31,7 @@ const features_section2 = [
   },
   {
     name: "For creators",
-    description: "Let ChatGPT inspire you. Train it on your manuscript, then ask: what might go next? Teach it to become an expert, or to write in the style of your favorite author.",
+    description: "Let ChatGPT inspire you. Train it on a famous novel, then ask: what might go next? Teach it to become an expert, or to write in the style of your favorite author.",
     icon: LockClosedIcon,
   },
   {
@@ -41,7 +41,7 @@ const features_section2 = [
   },
   {
     name: "For students",
-    description: "Don't want to read 200 pages tonight? Let ChatGPT summarize it. Need to write a history paper using textbook sources? Sure, ChatGPT can do that, too.",
+    description: "Don't want to read 200 pages tonight? Let ChatGPT summarize it. Need help writing a history paper using textbook sources? Sure, ChatGPT can do that, too.",
     icon: FingerPrintIcon,
   },
 ];

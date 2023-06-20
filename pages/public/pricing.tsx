@@ -95,19 +95,16 @@ export default function Pricing({ products }: Props) {
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center sm:flex sm:flex-col sm:align-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Unlimited messages, no extra fees</h2>
+            <h2 className="text-base font-semibold leading-7 text-indigo-600">Powerful options, low rates</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Pay only for what you use. No more.
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Pricing that's tailored for your needs. Use your official ChatGPT key from OpenAI to unlock powerful options at low rates.
+              Pricing that's tailored for your needs. You'll be billed each month at a fixed rate according to your plan, plus any messages you send using OpenAI's
               <span>
-                {' '} See usage rates 
-                <span>
-                  <Link href="https://openai.com/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
-                    {' '} here.
-                  </Link>
-                </span>
+                <Link href="https://openai.com/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+                  {' '} usage rates.
+                </Link>
               </span>
             </p>
             <div className="relative self-center mt-6 bg-zinc-100 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-100">

@@ -14,12 +14,12 @@ const questions = [
   },
   {
     q: 'What kind of data can I upload?',
-    a: 'You can upload any pdf file, any website url, or copy and paste any text. For example, you can upload a book, scrape Wikipedia, and so on.',
+    a: 'You can upload any pdf file, any website url, or copy and paste any text. For example, you can upload a book, scrape Wikipedia, and so on. The possibilities are endless!',
     icon: ArrowPathIcon,
   },
   {
     q: 'Do I get unlimited bots and messages?',
-    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages, with no hidden fees.',
+    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages when you sign up with either the Standard and Pro plans.',
     icon: ArrowPathIcon,
   },
   {

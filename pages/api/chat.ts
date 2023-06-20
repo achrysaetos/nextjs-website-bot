@@ -13,13 +13,18 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`;
 
+const QA_FOOTER = `
+Context: {context}
+Question: {question}
+Helpful answer in markdown:`
+
 export const makeChain = (
   apiKey: string,
   prompt: string,
   model: string,
   vectorstore: SupabaseVectorStore,
 ) => {
-  const QA_PROMPT = prompt;
+  const QA_PROMPT = "Instructions: " + prompt.trim().replace('\n', ' ') + QA_FOOTER;
   const gptmodel = new OpenAI({
     temperature: 0.5,
     modelName: model,

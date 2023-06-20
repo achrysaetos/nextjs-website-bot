@@ -43,7 +43,7 @@ export default function Layout({ children, meta: pageMeta }: Props) {
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.cardImage} />
       </Head>
-      {!subscription && <Banner />}
+      {userDetails && !subscription && <Banner />}
       <Navbar />
       <main id="skip">{children}</main>
     </>
