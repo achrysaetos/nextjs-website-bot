@@ -286,7 +286,7 @@ export default function Chatbot({ user }: { user: User }) {
       <div className='hidden sm:block'>
         <Box position='relative' marginTop='4'>
           <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-            Powered by ChatGPT. Copyright © 2022 Chatterup.
+            Powered by ChatGPT. Copyright © 2023 Chatterup.
           </AbsoluteCenter>
         </Box>
       </div>

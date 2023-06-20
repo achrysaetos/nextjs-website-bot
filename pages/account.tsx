@@ -190,15 +190,18 @@ export default function Account({ user }: { user: User }) {
             }
           >
             <div className='text-zinc-600'>
-              Enter your API key to unlock infinite messages! Get your key 
-              <Link href="https://platform.openai.com/account/api-keys" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
+              Enter your API key to unlock infinite messages! You won't be charged:
+            </div>
+            <div className='text-zinc-600 ml-6'>
+              1) Set up a your official OpenAI account by adding a payment method
+              <Link href="https://platform.openai.com/account/billing/overview" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
                 {" "} here.
               </Link>
             </div>
-            <div className='text-zinc-600'>
-              Need more help?
+            <div className='text-zinc-600 ml-6'>
+              2) Create your API key and paste it below. Get your key 
               <Link href="https://platform.openai.com/account/api-keys" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
-                {" "} Show me how to get my key.
+                {" "} here.
               </Link>
             </div>
             <form onSubmit={handleSubmit}>
@@ -246,13 +249,10 @@ export default function Account({ user }: { user: User }) {
             }
           >
             <div className='text-zinc-600'>
-              This is your current plan. See our pricing
-              <Link href="/public/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
-                {" "} here.
-              </Link>
+              You'll be billed each month at a fixed rate according to your plan, 
             </div>
             <div className='text-zinc-600'>
-              You will be billed according to your plan and OpenAI's
+              plus any messages you send using OpenAI's
               <Link href="https://openai.com/pricing" className='text-indigo-600' target="_blank" rel="noopener noreferrer">
                 {" "} usage rates.
               </Link>
@@ -280,7 +280,7 @@ export default function Account({ user }: { user: User }) {
         <Box position='relative' marginTop='4'>
           <Divider />
           <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-            Powered by ChatGPT. Copyright © 2022 Chatterup.
+            Powered by ChatGPT. Copyright © 2023 Chatterup.
           </AbsoluteCenter>
         </Box>
       </div>

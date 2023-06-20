@@ -2,41 +2,41 @@ import Link from "next/link";
 import Footer from '@/components/ui/Footer';
 
 const links = [
-  { name: 'Set up my API key', href: '#' },
-  { name: 'Train my first bot', href: '#' },
-  { name: 'Define the behavior', href: '#' },
+  { name: 'Set up my API key', href: '' },
+  { name: 'Train my first bot', href: '' },
+  { name: 'Define the behavior', href: '' },
 ]
 
 const posts = [
   {
     id: 1,
     title: 'How do I set up my API key?',
-    href: '#',
+    href: '',
     description:
       "This is the first (and only) step you need to start sending messages to your bot. With the official key from OpenAI, you'll have unlimited access to ChatGPT's most powerful models at extremely low rates.",
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Getting started', href: '#' },
+    category: { title: 'Getting started', href: '' },
   },
   {
     id: 2,
     title: 'How do I train my first bot?',
-    href: '#',
+    href: '',
     description:
       'You can upload custom data to teach your bot to become the perfect AI assistant. You can upload any pdf file, any website url, or copy and paste any text. For example, you can upload a book, scrape Wikipedia, and so on.',
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Getting started', href: '#' },
+    category: { title: 'Getting started', href: '' },
   },
   {
     id: 3,
     title: 'How do I define the behavior of my bot?',
-    href: '#',
+    href: '',
     description:
       "Once you finish training your bot, you can define its default behavior. For example, you might give it personality traits and instructions on how to answer questions (ie. reply like you're Hermione).",
     date: 'Mar 16, 2020',
     datetime: '2020-03-16',
-    category: { title: 'Getting started', href: '#' },
+    category: { title: 'Getting started', href: '' },
   },
 ]
 

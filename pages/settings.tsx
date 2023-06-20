@@ -187,7 +187,7 @@ Helpful answer in markdown:
         <Box position='relative' marginTop='4'>
           <Divider />
           <AbsoluteCenter bg='white' px='4' fontSize='12' textColor='gray.200'>
-            Powered by ChatGPT. Copyright © 2022 Chatterup.
+            Powered by ChatGPT. Copyright © 2023 Chatterup.
           </AbsoluteCenter>
         </Box>
       </div>
