@@ -1,7 +1,12 @@
+import { SaveContext } from '@/utils/context';
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import { useUser } from '@/utils/useUser';
 import Link from 'next/link'
+import { useContext } from 'react';
 
 export default function Banner() {
+  const { isLoading, subscription, userDetails } = useUser();
+  const { user_api, user_prompt, user_model } = useContext(SaveContext);
   return (
     <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
       <div
@@ -29,15 +34,40 @@ export default function Banner() {
         />
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="text-sm leading-6 text-gray-900">
-          <strong className="font-semibold">UNLIMITED 1-day free trial</strong>
-          <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
-            <circle cx={1} cy={1} r={1} />
-          </svg>
-          Add your official ChatGPT key from OpenAI to unlock infinite messages!
-        </p>
+        {(!userDetails?.user_api && !user_api) ?
+          <p className="text-sm leading-6 text-gray-900">
+            <strong className="font-semibold">
+              UNLIMITED 1-day free trial
+            </strong>
+            <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
+              <circle cx={1} cy={1} r={1} />
+            </svg>
+            Add your official ChatGPT key from OpenAI to unlock infinite messages!
+          </p>
+        :
+          (!subscription && !userDetails?.onTrial) ?
+            <p className="text-sm leading-6 text-gray-900">
+              <strong className="font-semibold">
+                Your trial has ended
+              </strong>
+              <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              Would you like to sign up for a new unlimited plan?
+            </p>
+          :
+            <p className="text-sm leading-6 text-gray-900">
+              <strong className="font-semibold">
+                Congrats!
+              </strong>
+              <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              It's time to train your bot. Once your bot is trained, you can start chatting with it.
+            </p>
+        }
         <Link
-          href="/account"
+          href={((!userDetails?.user_api && !user_api) || (!subscription && !userDetails?.onTrial)) ? "/account" : "/training"}
           className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         >
           Show me <span aria-hidden="true">&rarr;</span>

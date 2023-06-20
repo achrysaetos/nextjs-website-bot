@@ -32,6 +32,7 @@ export interface UserDetails {
   user_prompt?: string;
   user_api?: string;
   user_model?: string;
+  onTrial?: boolean;
   avatar_url?: string;
   billing_address?: Stripe.Address;
   payment_method?: Stripe.PaymentMethod[Stripe.PaymentMethod.Type];

@@ -67,6 +67,18 @@ export default function Chatbot({ user }: { user: User }) {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
+    if (!subscription && !userDetails?.onTrial) {
+      toast({
+        title: 'Error!',
+        position: 'top-right',
+        description: "Your trial has ended. Sign up for a plan?",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return;
+    }
+
     if (!query) {
       toast({
         title: 'Error!',

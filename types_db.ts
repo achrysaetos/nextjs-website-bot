@@ -180,6 +180,7 @@ export interface Database {
           user_prompt: string | null;
           user_api: string | null;
           user_model: string | null;
+          onTrial: boolean;
           id: string;
           idx: number;
           payment_method: Json | null;
@@ -191,6 +192,7 @@ export interface Database {
           user_prompt?: string | null;
           user_api?: string | null;
           user_model?: string | null;
+          onTrial?: boolean;
           id: string;
           idx: number;
           payment_method?: Json | null;
@@ -202,6 +204,7 @@ export interface Database {
           user_prompt?: string | null;
           user_api?: string | null;
           user_model?: string | null;
+          onTrial?: boolean;
           id?: string;
           idx?: number;
           payment_method?: Json | null;
