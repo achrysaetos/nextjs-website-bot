@@ -100,7 +100,7 @@ export default function Training({ user }: { user: User }) {
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Please try again or contact support.",
+        description: "Check that your API key is correct.",
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -156,7 +156,7 @@ export default function Training({ user }: { user: User }) {
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Make sure your links work and are on separate lines.",
+        description: "Check your API key and links (one per line).",
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -212,7 +212,7 @@ export default function Training({ user }: { user: User }) {
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Please try again or contact support.",
+        description: "Check that your API key is correct.",
         status: 'error',
         duration: 3000,
         isClosable: true,
