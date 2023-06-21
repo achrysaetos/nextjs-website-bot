@@ -16,7 +16,7 @@ export default function Footer() {
               </div>
 
               <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left">
-                Chatterup, a custom ChatGPT solution for your use case. Contact us at support@chatterup.co to learn more.
+                Chatterup, a custom ChatGPT solution for your use case. Contact us at chatterup@proton.me to learn more.
               </p>
             </div>
 

@@ -78,7 +78,7 @@ export default function Support() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">How can we help?</h2>
             <p className="mt-6 text-lg leading-8 text-gray-300">
-              Need to close an account? Cancel a subscription? Tips on how to get started? Email us at support@chatterup.co. We're always happy to help.
+              Need to close an account? Cancel a subscription? Tips on how to get started? Email us at chatterup@proton.me. We're always happy to help.
             </p>
           </div>
           <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
