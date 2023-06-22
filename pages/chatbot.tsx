@@ -162,7 +162,7 @@ export default function Chatbot({ user }: { user: User }) {
       toast({
         title: 'Error!',
         position: 'top-right',
-        description: "Please try again or contact support.",
+        description: "Please refresh the page and try again.",
         status: 'error',
         duration: 3000,
         isClosable: true,
