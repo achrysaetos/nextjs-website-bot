@@ -59,13 +59,13 @@ export default function Training({ user }: { user: User }) {
     try {
       const path = '/api/text-embed';
       const apiKey = user_api || userDetails?.user_api;
-      const user_idx = userDetails?.idx;
+      const namespace = userDetails?.id;
       const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey, user_idx, cleartbl})
+        body: JSON.stringify({text, apiKey, namespace, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
@@ -115,13 +115,13 @@ export default function Training({ user }: { user: User }) {
     try {
       const path = '/api/links-embed';
       const apiKey = user_api || userDetails?.user_api;
-      const user_idx = userDetails?.idx;
+      const namespace = userDetails?.id;
       const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({urls, apiKey, user_idx, cleartbl})
+        body: JSON.stringify({urls, apiKey, namespace, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, urls, res });
@@ -171,13 +171,13 @@ export default function Training({ user }: { user: User }) {
     try {
       const path = '/api/text-embed';
       const apiKey = user_api || userDetails?.user_api;
-      const user_idx = userDetails?.idx;
+      const namespace = userDetails?.id;
       const cleartbl = trainNew
       const res: Response = await fetch(path, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
-        body: JSON.stringify({text, apiKey, user_idx, cleartbl})
+        body: JSON.stringify({text, apiKey, namespace, cleartbl})
       });
       if (!res.ok) {
         console.log('Error in postData', { path, text, res });
