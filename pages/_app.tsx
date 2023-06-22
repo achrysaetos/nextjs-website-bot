@@ -9,6 +9,7 @@ import { MyUserContextProvider } from '@/utils/useUser';
 import type { Database } from 'types_db';
 import { ChakraProvider } from '@chakra-ui/react'
 import { SaveContext } from '@/utils/context';
+import { Analytics } from '@vercel/analytics/react';
 
 import 'styles/main.css';
 import 'styles/chrome-bug.css';
@@ -34,6 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <ChakraProvider>
               <Layout>
                 <Component {...pageProps} />
+                <Analytics />
               </Layout>
             </ChakraProvider>
           </SaveContext.Provider>
