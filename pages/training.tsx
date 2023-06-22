@@ -128,7 +128,7 @@ export default function Training({ user }: { user: User }) {
         throw Error(res.statusText);
       }
       const response = await res.json();
-      setScrapedLinks(response.message[0].pageContent)
+      setScrapedLinks(response.message.map((m: any) => m.pageContent).join('\n'))
       setLoading(false);
       if (trainNew)
         toast({
@@ -494,7 +494,7 @@ export default function Training({ user }: { user: User }) {
               Cancel
             </Link>
             {loading ? (
-              <button type="submit" disabled={loading} className="btn md:btn-wide">
+              <button type="submit" disabled={loading} className="btn btn-primary md:btn-wide rounded-full">
                 <span className="loading loading-spinner"></span>
                 Training
               </button>
