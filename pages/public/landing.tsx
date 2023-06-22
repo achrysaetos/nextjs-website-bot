@@ -68,7 +68,7 @@ export default function Landing() {
             <div className="mx-auto max-w-2xl py-32 pt-48">
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  Announcing an UNLIMITED 1-day free trial.{" "}
+                  Announcing an UNLIMITED 1-week free trial.{" "}
                   <Link href="/public/pricing" className="font-semibold text-indigo-600">
                       <span className="absolute inset-0" aria-hidden="true" />
                       Get started <span aria-hidden="true">&rarr;</span>
@@ -227,7 +227,7 @@ export default function Landing() {
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                   <Link href="/public/pricing" className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                      UNLIMITED 1-day trial
+                      UNLIMITED 1-week trial
                   </Link>
                   <Link href="/public/features" className="text-sm font-semibold leading-6 text-white">
                       Learn more <span aria-hidden="true">→</span>
