@@ -19,12 +19,12 @@ const questions = [
   },
   {
     q: 'Do I get unlimited bots and messages?',
-    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need. You get unlimited messages when you sign up for either the Standard and Pro plans.',
+    a: 'Yes, you can use your official ChatGPT key from OpenAI to pay only for what you need, at either $0.0015 or $0.020 per 750 words! You get unlimited messages right when you sign up.',
     icon: ArrowPathIcon,
   },
   {
     q: 'What ChatGPT model is available?',
-    a: 'You have access to either gpt-3.5-turbo or text-davinci-003. The latter is more powerful, while the former is more cost effective.',
+    a: 'You have access to either gpt-3.5-turbo or text-davinci-003. The latter is better at following instructions, whereas the former is more cost effective.',
     icon: FingerPrintIcon,
   },
   {

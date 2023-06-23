@@ -37,9 +37,9 @@ export default function Features() {
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
                 <p className="text-base font-semibold leading-7 text-indigo-600">Revolutionary freedom</p>
-                <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Power, without the cost</h1>
+                <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">AI for the people, finally</h1>
                 <p className="mt-6 text-xl leading-8 text-gray-700">
-                  For the first time, you'll have access to a fully customizable ChatGPT assistant, minus the exorbitant fees of other providers. 
+                  For the first time, you'll have access to a fully customizable ChatGPT assistant, minus the exorbitant fees of other providers. Don't pay for something that should be free.
                 </p>
               </div>
             </div>
@@ -56,30 +56,30 @@ export default function Features() {
               <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
                 <ul role="list" className="space-y-8 text-gray-600">
                   <li className="flex gap-x-3">
+                    <ServerIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                    <span>
+                      <strong className="font-semibold text-gray-900">No subscription required.</strong> 
+                      {" "} At Chatterup, we're making the cutting edge of AI research accessible for everyone. We're not here to make a quick buck. We built Chatterup for you, and together, we'll meet the future head-on.
+                    </span>
+                  </li>
+                  <li className="flex gap-x-3">
                     <CloudArrowUpIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                     <span>
                       <strong className="font-semibold text-gray-900">Unlimited messages and chatbots.</strong> 
-                      {" "} Your official ChatGPT key from OpenAI offers unparalleled flexiblity. Need to send many messages one month, and fewer the next? No problem! OpenAI's pricing conforms to your needs each month, so you don't pay more than you have to. 
+                      {" "} Your official ChatGPT key from OpenAI offers unparalleled flexibility for your use case. Per-message rates only apply for the messages you send - never be locked into a subscription again.
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <LockClosedIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-gray-900">Revolutionary and customizeable AI.</strong> 
-                      {" "} ChatGPT is the most advanced natural language service in the world, and now you can use it to power your own chatbots. For your security, don't upload sensitive documents and data. Everything else you use to train it will guide its development, and make it even more powerful and tailored for your use case.
-                    </span>
-                  </li>
-                  <li className="flex gap-x-3">
-                    <ServerIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
-                    <span>
-                      <strong className="font-semibold text-gray-900">Built for the people.</strong> 
-                      {" "} At Chatterup, we're making the cutting edge of AI research accessible for everyone. We believe that the future of AI is in the hands of the people, and we're here build it with you, one step at a time, together.
+                      <strong className="font-semibold text-gray-900">New customizeable AI.</strong> 
+                      {" "} Train ChatGPT to power your own chatbot with custom data. For your security, don't upload sensitive information. Everything else you use to train it will guide its development and tailor it for your use case.
                     </span>
                   </li>
                 </ul>
-                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Pricing that makes sense</h2>
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Pricing that doesn't rip you off</h2>
                 <p className="mt-6">
-                  Introducing a revolutionary new subscription model where you only pay for what you use. You'll be billed each month at a fixed rate according to your plan, plus any messages you send through your ChatGPT key at either $0.0015 or $0.020 per 1000 tokens. This offers maximum flexibility for every use case. Keep an eye on your account dashboard to see how much you've used to date, and say goodbye to the exorbitant fees of other providers!
+                  Introducing a revolutionary, new subscription-less model where you're in complete control. You'll only be billed for the messages you send through OpenAI's official ChatGPT key, at $0.0015 per 750 words. That means you can write an entire book, or send hundreds of messages, for just a dollar. Say goodbye to the exorbitant fees of other providers!
                 </p>
               </div>
             </div>
